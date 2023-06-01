@@ -1,0 +1,52 @@
+.rightSidebar {
+    z-index: 50;
+    background-color: #fdfdfd;
+    width: 350px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: -400px;
+    transition: 200ms;
+    overflow-y: auto;
+}
+.rightSidebar.active {
+    right: 0;
+    transition: 150ms;
+}
+
+.container {
+    width: 100%;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.topBar {
+    width: 100%;
+    padding: 0 5px 5px 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.separator {
+    width: 100%;
+    border-top: 1px solid #c2c2c2;
+}
+
+.container p {
+    color: #565656 !important;
+ }
+
+.avatarItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    padding-bottom: 1px;
+}
