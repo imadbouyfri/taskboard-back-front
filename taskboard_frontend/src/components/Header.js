@@ -7,9 +7,11 @@ import { styled, alpha } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import InputBase from '@mui/material/InputBase';
 import Menu from '@mui/material/Menu';
+import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import UserAvatar from "./avatar/UserAvatar";
@@ -19,7 +21,24 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/notification/${user._id}`);
+        console.log(response.data);
+        setNotifications(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
   
+    if (user) {
+      fetchNotifications();
+    }
+  }, [user]);
+
   const styles = {
     backgroundColor: '#FFFFFF',
     color: '#4d56bf',
@@ -64,14 +83,24 @@ const Header = () => {
       },
     },
   }));
+
   const [anchorElUser, setAnchorElUser] = useState(null);
-  
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
   
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   
   const onLogout = () => {
@@ -107,9 +136,75 @@ const Header = () => {
             {user ? (
               <>
                 <Box sx={{ marginRight: 3 }}>
-                  <Badge color="error" badgeContent={100} max={99}>
-                    <NotificationsIcon />
-                  </Badge>
+                  <Tooltip title="Open Notifications">
+                      <IconButton
+                          id="basic-button"
+                          onClick={handleClick}
+                          aria-controls={open ? 'basic-menu' : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                        >
+                          <Badge color="error" badgeContent={notifications.length} max={50}>
+  <NotificationsIcon />
+</Badge>
+                      </IconButton>
+                  </Tooltip>
+                  <Menu
+                    id="basic-menu"
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 0,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&:before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                  >
+                    {notifications.length > 0 ? (
+  notifications.map((notification) => (
+    <div className="notification-item">
+      {notification.admin && (
+        <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+      )}
+      <div className="notification-message">
+        {notification.admin? (
+          `${notification.admin.name} ${notification.action} ${notification.board.name}`
+        ) : (
+          `${notification.action} ${notification.board}`
+        )}
+      </div>
+    </div>
+  ))
+) : (
+  <MenuItem onClick={handleCloseUserMenu}>
+    No notifications found
+  </MenuItem>
+)}
+                  </Menu>
                 </Box>
                 <Box>
                   <Tooltip title="Open settings">

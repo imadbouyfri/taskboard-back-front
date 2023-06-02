@@ -9,7 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import axios from "axios";
 import { useState } from "react";
-import './inviteMember.css'
+import './inviteMember.css';
+
 
 const styles = {
   form: {
@@ -50,7 +51,8 @@ export default function InviteMember({
   invitedMembers,
   setInvitedMembers,
   user,
-  boardId
+  boardId,
+  boardName
 }) {
   
   const [selectedMembers, setSelectedMembers] = useState([]);
@@ -98,6 +100,12 @@ export default function InviteMember({
     setInvitedMembers([...invitedMembers, ...newInvitedMembers]);
     
     // DB
+    // const admin = invitedMembers.find((member) => member.role === 'admin');
+    // const adminData = {
+    //   _id: admin._id,
+    //   name: admin.name,
+    //   color: admin.color,
+    // };
     for (let i = 0; i < newInvitedMembers.length; i++) {
       try {
         const data = {
@@ -105,6 +113,13 @@ export default function InviteMember({
           user: newInvitedMembers[i]._id,
           role: "invited"
         }
+        const data1 = {
+          user: newInvitedMembers[i]._id,
+          action: "add",
+          board: boardId,
+          admin: invitedMembers[i]._id,
+        }
+        // console.log(data1)
         
         if (!user) return;
         const token = user.token;
@@ -114,6 +129,7 @@ export default function InviteMember({
           }
         }
         await axios.post("http://localhost:3001/permission/", data, config);
+        await axios.post("http://localhost:3001/notification", data1, config);
       } catch (err) {
         console.log(err)
       }

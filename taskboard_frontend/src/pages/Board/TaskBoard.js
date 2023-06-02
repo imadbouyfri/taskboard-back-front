@@ -396,6 +396,7 @@ const Board = () => {
           recordUpdate={recordUpdate}
           user={user}
           boardId={id}
+          boardName={boardTitle}
         />
       </Popup>
       
