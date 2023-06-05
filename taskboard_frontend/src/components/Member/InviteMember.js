@@ -80,6 +80,19 @@ export default function InviteMember({
         board: boardId,
         role: e.target.value
       });
+      if (e.target.value === "admin") {
+        const admin = invitedMembers.filter((member) => member.role === 'admin')[0];
+        const data = {
+          user: memberChanged._id,
+          action: "role",
+          board: boardId,
+          admin: admin._id,
+        };
+        console.log(data);
+        await axios.post("http://localhost:3001/notification", data);
+    }
+  
+  
     } catch (err) {
       console.log(err);
     }
