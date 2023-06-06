@@ -13,10 +13,6 @@ const notificationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Board",
     },
-    card: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Card",
-    },
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

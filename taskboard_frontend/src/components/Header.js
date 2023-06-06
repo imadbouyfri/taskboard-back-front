@@ -28,7 +28,7 @@ const Header = () => {
     const fetchNotifications = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/notification/${user._id}`);
-        console.log(response.data);
+        // console.log(response.data);
         setNotifications(response.data);
       } catch (error) {
         console.log(error);
@@ -39,6 +39,8 @@ const Header = () => {
       fetchNotifications();
     }
   }, [user]);
+
+  console.log(notifications);
 
   const styles = {
     backgroundColor: '#FFFFFF',
@@ -187,22 +189,36 @@ const Header = () => {
                   >
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
                       {notifications.length > 0 ? (
-                          notifications.map((notification) => (
-                            <MenuItem>
-                              <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black', transition: 'red 0.3s',}}>
-                              <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              {notification.admin && (
-                                <UserAvatar name={notification.admin.name} color={notification.admin.color} />
-                              )}
-                              <div className="notification-message">
-                                {notification.admin? (
-                                  `${notification.admin.name} ${notification.action === "add" ? "added you to" : notification.action === "role" ? "added you as an admin" : (notification.action === "update" ? "updated" : "deleted")} the board ${notification.board.name}`
-                                ) : (
-                                  `${notification.action === "add" ? "added" : (notification.action === "update" ? "updated" : "deleted")} you to the board ${notification.board}`
-                                )}
-                              </div>
-                            </div>              
-                            </Link>
+                          notifications.map((notification, index) => (
+                            <MenuItem key={index}>
+                              <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black', transition: 'red 0.3s' }}>
+                                <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  {notification.admin && (
+                                    <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+                                  )}
+                                  <div className="notification-message">
+                                    {notification.admin ? (
+                                      <>
+                                        {notification.admin.name}{' '}
+                                        {notification.action === "add" ? "added you to" : 
+                                        notification.action === "role" ? "added you as an admin" :
+                                        notification.action === "assign" ? "assigned a task to you" :
+                                        notification.action === "update" ? "updated" :
+                                        "deleted"} the board {notification.board.name}
+                                      </>
+                                    ) : (
+                                      <>
+                                        {notification.action === "add" ? "added" : 
+                                        notification.action === "update" ? "updated" :
+                                        "deleted"} you to the board {notification.board}
+                                      </>
+                                    )}
+                                    {notification.card && (
+                                      <>: Admin assigned you a task</>
+                                    )}
+                                  </div>
+                                </div>
+                              </Link>
                             </MenuItem>
                           ))
                         ) : (
@@ -210,12 +226,12 @@ const Header = () => {
                             No notifications found
                           </MenuItem>
                         )}
-                        {notifications.length > 0 && (
-                          <div style={{ position: 'fixed', bottom: '10px', left: '50%', transform: 'translateX(-50%)', width: '95%'}}>
-                          <Button variant="contained" style={{ width: '100%' }}>
-                            Mark as read
-                          </Button>
-                        </div>
+                        {notifications.length === 2 && (
+                          <div style={{ position: 'fixed', top: '80px', left: '50%', transform: 'translateX(-50%)', width: '95%'}}>
+                            <Button variant="contained" style={{ width: '100%' }}>
+                              Mark as read
+                            </Button>
+                          </div>
                         )}
                     </div>
                   </Menu>

@@ -14,7 +14,7 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 
 router.get("/", protect, getAllBoards);
-router.get("/:id", protect, boardById);
+router.get("/:id", boardById);
 router.get("/boards", allBoards);
 
 router.post("/create", protect, createBoard);

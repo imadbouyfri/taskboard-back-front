@@ -21,10 +21,15 @@ export default function CardMemberInvite({ notCardMembers, cardMembers, setCardM
     setCardMembers([...cardMembers, mem]);
     notCardMembers.splice(notCardMembers.indexOf(mem), 1);
     await axios.post('http://localhost:3001/cardPermission', {user: mem._id, card: card._id, role: 'invited'});
+    const boardId = list.board_id;
+    console.log(boardId);
+    const boardResponse = await axios.get(`http://localhost:3001/board/${boardId}`);
+    const board = boardResponse.data;
     const data1 = {
       user: mem._id,
-      action: "add",
-      board: card._id,
+      action: "assign",
+      admin: cardMembers[0],
+      board: {_id: boardId, name: board.name}
     }
     console.log(data1);
     await axios.post("http://localhost:3001/notification", data1);

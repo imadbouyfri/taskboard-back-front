@@ -132,7 +132,7 @@ export default function InviteMember({
           board: boardId,
           admin: invitedMembers[i]._id,
         }
-        // console.log(data1)
+        console.log(boardId)
         
         if (!user) return;
         const token = user.token;

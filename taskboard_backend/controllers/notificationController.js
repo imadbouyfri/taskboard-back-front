@@ -47,3 +47,19 @@ exports.createNotification = async (req, res) => {
       res.status(500).json({ message: "Failed to create notification." });
     }
   };
+
+  exports.deleteNotifications = async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const notifications = await Notification.find({ user: userId });
+      
+      for (const notification of notifications) {
+        await notification.remove();
+      }
+      
+      res.status(200).json({ message: "All notifications deleted successfully." });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Failed to delete notifications." });
+    }
+  };
