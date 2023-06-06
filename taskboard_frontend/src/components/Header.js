@@ -187,7 +187,7 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
-                    <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
+                    <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto'}}>
                       {notifications.length > 0 ? (
                           notifications.map((notification, index) => (
                             <MenuItem key={index}>
@@ -226,9 +226,9 @@ const Header = () => {
                             No notifications found
                           </MenuItem>
                         )}
-                        {notifications.length === 2 && (
-                          <div style={{ position: 'fixed', top: '80px', left: '50%', transform: 'translateX(-50%)', width: '95%'}}>
-                            <Button variant="contained" style={{ width: '100%' }}>
+                        {notifications.length > 0 && (
+                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <Button variant="contained" style={{ width: '95%' }}>
                               Mark as read
                             </Button>
                           </div>
