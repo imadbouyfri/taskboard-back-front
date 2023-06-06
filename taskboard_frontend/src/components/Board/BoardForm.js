@@ -90,11 +90,25 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
   //updateBoard
   const updateBoard = (data) => {
     console.log('updateData', data);
+  axios
+    .patch(`http://localhost:3001/board/${state._id}`, { name: data.name, descData: data.descData }, config)
+    .then((res) => {
+      // navigate('/');
+      res.json(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    const notificationData = {
+      action: "role",
+      board: state,
+    };
+    console.log(notificationData);
     axios
-      .patch(`http://localhost:3001/board/${state._id}`, { name: data.name, descData: data.descData }, config)
+      .post("http://localhost:3001/notification", notificationData)
       .then((res) => {
-        // navigate('/');
-        res.json(res);
+        // Handle the response if needed
       })
       .catch((err) => {
         console.log(err);
