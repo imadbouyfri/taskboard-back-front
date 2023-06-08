@@ -221,7 +221,7 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '90px', marginLeft: '15px'}}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: '15px'}}>
                       <div>
                         <Typography variant="h6" gutterBottom>
                           Notifications
