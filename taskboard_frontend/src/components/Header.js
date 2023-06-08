@@ -17,7 +17,9 @@ import { logout, reset } from "../features/auth/authSlice";
 import UserAvatar from "./avatar/UserAvatar";
 import { Badge, Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { blue } from '@mui/material/colors';
+import { FormControlLabel, Switch } from '@mui/material';
+import ListSubheader from '@mui/material/ListSubheader';
+import Divider from '@mui/material/Divider';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -219,6 +221,20 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '90px', marginLeft: '15px'}}>
+                      <div>
+                        <Typography variant="h6" gutterBottom>
+                          Notifications
+                        </Typography>
+                      </div>
+                      <div>
+                        <FormControlLabel
+                          control={<Switch />}
+                          label="Show Read Notifications"
+                        />
+                      </div>
+                    </div>
+                    <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
                       {unreadNotifications.length > 0 ? (
                         unreadNotifications.map((notification, index) => (
