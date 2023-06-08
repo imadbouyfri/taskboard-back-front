@@ -125,7 +125,25 @@ const Header = () => {
     dispatch(logout());
     navigate('/');
   }
+
+  const handleMarkAsRead = async () => {
+    // Update the read property of each notification to true
+    const updatedNotifications = notifications.map((notification) => {
+      return { ...notification, read: true };
+    });
+    setNotifications(updatedNotifications);
+
+    try {
+      // Send API request to update notifications in the database
+      await axios.put(`http://localhost:3001/notification/${user._id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
+  // Filter out the notifications with read === false
+  const unreadNotifications = notifications.filter((notification) => !notification.read);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={styles}>
@@ -161,7 +179,7 @@ const Header = () => {
                           aria-haspopup="true"
                           aria-expanded={open ? 'true' : undefined}
                         >
-                          <Badge color="error" badgeContent={notifications.length} max={50}>
+                          <Badge color="error" badgeContent={unreadNotifications.length} max={50}>
                             <NotificationsIcon />
                           </Badge>
                       </IconButton>
@@ -202,8 +220,8 @@ const Header = () => {
                     onClick={handleClose}
                   >
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-                      {notifications.length > 0 ? (
-                        notifications.map((notification, index) => (
+                      {unreadNotifications.length > 0 ? (
+                        unreadNotifications.map((notification, index) => (
                           <MenuItem key={index}>
                             <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
                               <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -238,9 +256,9 @@ const Header = () => {
       No notifications found
     </MenuItem>
   )}
-  {notifications.length > 0 && (
+  {unreadNotifications.length > 0 && (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px', width: '100%' }}>
-      <Button variant="contained" style={{ width: '95%' }}>
+      <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
         Mark as read
       </Button>
     </div>

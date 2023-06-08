@@ -20,7 +20,11 @@ const notificationSchema = new mongoose.Schema({
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-    }
+    },
+    read: {
+        type: Boolean,
+        default: false,
+    },
 },
 { timestamps: true }
 );

@@ -69,3 +69,18 @@ exports.createNotification = async (req, res) => {
       res.status(500).json({ message: "Failed to delete notifications." });
     }
   };
+
+  exports.updateNotificationReadStatus = async (req, res) => {
+    try {
+      await Notification.updateMany({ read: false }, { read: true });
+  
+      res.json({ message: "Notifications updated successfully." });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Failed to update notification read status." });
+    }
+  };
+  
+  
+  
+  
