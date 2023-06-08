@@ -17,6 +17,7 @@ import { logout, reset } from "../features/auth/authSlice";
 import UserAvatar from "./avatar/UserAvatar";
 import { Badge, Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { blue } from '@mui/material/colors';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -35,9 +36,22 @@ const Header = () => {
       }
     };
   
+    // Fetch notifications initially
     if (user) {
       fetchNotifications();
     }
+
+    // Fetch notifications every 10 seconds
+    const intervalId = setInterval(() => {
+      if (user) {
+        fetchNotifications();
+      }
+    }, 10000);
+
+    // Cleanup the interval when the component is unmounted
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [user]);
 
   console.log(notifications);
@@ -148,8 +162,8 @@ const Header = () => {
                           aria-expanded={open ? 'true' : undefined}
                         >
                           <Badge color="error" badgeContent={notifications.length} max={50}>
-  <NotificationsIcon />
-</Badge>
+                            <NotificationsIcon />
+                          </Badge>
                       </IconButton>
                   </Tooltip>
                   <Menu
@@ -187,53 +201,51 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
-                    <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto'}}>
-                      {notifications.length > 0 ? (
-                          notifications.map((notification, index) => (
-                            <MenuItem key={index}>
-                              <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black', transition: 'red 0.3s' }}>
-                                <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                  {notification.admin && (
-                                    <UserAvatar name={notification.admin.name} color={notification.admin.color} />
-                                  )}
-                                  <div className="notification-message">
-                                    {notification.admin ? (
-                                      <>
-                                        {notification.admin.name}{' '}
-                                        {notification.action === "add" ? "added you to" : 
-                                        notification.action === "role" ? "added you as an admin" :
-                                        notification.action === "assign" ? "assigned a task to you" :
-                                        notification.action === "update" ? "updated" :
-                                        "deleted"} the board {notification.board.name}
-                                      </>
-                                    ) : (
-                                      <>
-                                        {notification.action === "add" ? "added" : 
-                                        notification.action === "update" ? "updated" :
-                                        "deleted"} you to the board {notification.board}
-                                      </>
-                                    )}
-                                    {notification.card && (
-                                      <>: Admin assigned you a task</>
-                                    )}
-                                  </div>
-                                </div>
-                              </Link>
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem onClick={handleCloseUserMenu}>
-                            No notifications found
-                          </MenuItem>
-                        )}
-                        {notifications.length > 0 && (
-                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <Button variant="contained" style={{ width: '95%' }}>
-                              Mark as read
-                            </Button>
-                          </div>
-                        )}
-                    </div>
+                    <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
+  {notifications.length > 0 ? (
+    notifications.map((notification, index) => (
+      <MenuItem key={index}>
+        <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
+          <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {notification.admin && (
+              <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+            )}
+            <div className="notification-message">
+            {notification.card && (
+                <>
+                {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
+                <span style={{ color: 'blue' }}>{notification.board.name}</span>
+              </>
+)}
+                {!notification.card && (
+                    <>
+                    {notification.admin.name}{' '}
+                    {notification.action === "add" ? "added you to" :
+                    notification.action === "role" ? "added you as an admin" :
+                    notification.action === "assign" ? "assigned a task to you" :
+                    notification.action === "update" ? "updated" :
+                    "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                  </>
+                  )
+                }
+            </div>
+          </div>
+        </Link>
+      </MenuItem>
+    ))
+  ) : (
+    <MenuItem onClick={handleCloseUserMenu}>
+      No notifications found
+    </MenuItem>
+  )}
+  {notifications.length > 0 && (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px', width: '100%' }}>
+      <Button variant="contained" style={{ width: '95%' }}>
+        Mark as read
+      </Button>
+    </div>
+  )}
+</div>
                   </Menu>
                 </Box>
                 <Box>

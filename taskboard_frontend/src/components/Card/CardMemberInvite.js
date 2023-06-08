@@ -29,6 +29,7 @@ export default function CardMemberInvite({ notCardMembers, cardMembers, setCardM
       user: mem._id,
       action: "assign",
       admin: cardMembers[0],
+      card: card,
       board: {_id: boardId, name: board.name}
     }
     console.log(data1);
