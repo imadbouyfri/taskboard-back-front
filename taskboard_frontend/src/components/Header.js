@@ -221,7 +221,7 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: '15px'}}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '70px', marginLeft: '15px'}}>
                       <div>
                         <Typography variant="h6" gutterBottom>
                           Notifications
@@ -263,22 +263,22 @@ const Header = () => {
                                     )
                                   }
                               </div>
-          </div>
-        </Link>
-      </MenuItem>
-    ))
-  ) : (
-    <MenuItem onClick={handleCloseUserMenu}>
-      No notifications found
-    </MenuItem>
-  )}
-  {unreadNotifications.length > 0 && (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px', width: '100%' }}>
-      <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
-        Mark as read
-      </Button>
-    </div>
-  )}
+                              </div>
+                            </Link>
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem>
+                              All the notifications have been read.
+                        </MenuItem>
+                      )}
+                      {unreadNotifications.length > 0 && (
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
+                          <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
+                            Mark as read
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </Menu>
                 </Box>
