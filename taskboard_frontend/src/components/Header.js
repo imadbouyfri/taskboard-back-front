@@ -202,33 +202,33 @@ const Header = () => {
                     onClick={handleClose}
                   >
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-  {notifications.length > 0 ? (
-    notifications.map((notification, index) => (
-      <MenuItem key={index}>
-        <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
-          <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {notification.admin && (
-              <UserAvatar name={notification.admin.name} color={notification.admin.color} />
-            )}
-            <div className="notification-message">
-            {notification.card && (
-                <>
-                {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
-                <span style={{ color: 'blue' }}>{notification.board.name}</span>
-              </>
-)}
-                {!notification.card && (
-                    <>
-                    {notification.admin.name}{' '}
-                    {notification.action === "add" ? "added you to" :
-                    notification.action === "role" ? "added you as an admin" :
-                    notification.action === "assign" ? "assigned a task to you" :
-                    notification.action === "update" ? "updated" :
-                    "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                  </>
-                  )
-                }
-            </div>
+                      {notifications.length > 0 ? (
+                        notifications.map((notification, index) => (
+                          <MenuItem key={index}>
+                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
+                              <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                {notification.admin && (
+                                  <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+                                )}
+                                <div className="notification-message">
+                                  {notification.card && (
+                                      <>
+                                      {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
+                                      <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                                    </>
+                                  )}
+                                  {!notification.card && (
+                                      <>
+                                      {notification.admin.name}{' '}
+                                      {notification.action === "add" ? "added you to" :
+                                      notification.action === "role" ? "added you as an admin" :
+                                      notification.action === "assign" ? "assigned a task to you" :
+                                      notification.action === "update" ? "updated" :
+                                      "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                                    </>
+                                    )
+                                  }
+                              </div>
           </div>
         </Link>
       </MenuItem>
@@ -245,7 +245,7 @@ const Header = () => {
       </Button>
     </div>
   )}
-</div>
+                    </div>
                   </Menu>
                 </Box>
                 <Box>
