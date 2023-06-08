@@ -229,7 +229,11 @@ const Header = () => {
                       </div>
                       <div>
                         <FormControlLabel
-                          control={<Switch />}
+                          control={
+                            <Switch
+                              onClick={(event) => event.stopPropagation()}
+                            />
+                          }
                           label="Show Read Notifications"
                         />
                       </div>
