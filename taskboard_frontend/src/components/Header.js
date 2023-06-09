@@ -25,7 +25,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [notifications, setNotifications] = useState([]);
-  const [showReadNotifications, setShowReadNotifications] = useState(true);
+  const [showReadNotifications, setShowReadNotifications] = useState(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -148,9 +148,12 @@ const Header = () => {
     setShowReadNotifications(!showReadNotifications);
   };
 
-  const filteredNotifications = (showReadNotifications === true)
-    ? notifications
-    : notifications.filter((notification) => !notification.read);
+  let filteredNotifications;
+  if (notifications && notifications.length > 0) {
+    filteredNotifications = (showReadNotifications === true)
+      ? notifications
+      : notifications.filter((notification) => !notification.read);
+  }
 
   console.log(showReadNotifications);
   console.log(filteredNotifications);
@@ -190,7 +193,7 @@ const Header = () => {
                           aria-haspopup="true"
                           aria-expanded={open ? 'true' : undefined}
                         >
-                          <Badge color="error" badgeContent={!showReadNotifications ?  filteredNotifications.length : 0} max={50}>
+                          <Badge color="error" badgeContent={!showReadNotifications && filteredNotifications ?  filteredNotifications.length : 0} max={50}>
                             <NotificationsIcon />
                           </Badge>
                       </IconButton>
@@ -250,10 +253,10 @@ const Header = () => {
                     </div>
                     <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-                      {filteredNotifications.length > 0 ? (
+                      {filteredNotifications ? (
                         filteredNotifications.map((notification, index) => (
                           <MenuItem key={index}>
-                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}} onClick={handleMarkAsRead}>
+                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
                               <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 {notification.admin && (
                                   <UserAvatar name={notification.admin.name} color={notification.admin.color} />
@@ -286,7 +289,7 @@ const Header = () => {
                               All the notifications have been read.
                         </MenuItem>
                       )}
-                      {filteredNotifications.length > 0 && !showReadNotifications && (
+                      {filteredNotifications && !showReadNotifications && (
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
                           <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
                             Mark as read
