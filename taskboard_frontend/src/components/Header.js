@@ -120,6 +120,7 @@ const Header = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setShowReadNotifications(false);
   };
   
   const onLogout = () => {
