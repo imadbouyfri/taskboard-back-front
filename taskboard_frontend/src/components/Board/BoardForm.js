@@ -99,20 +99,6 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
     .catch((err) => {
       console.log(err);
     });
-
-    const notificationData = {
-      action: "role",
-      board: state,
-    };
-    console.log(notificationData);
-    axios
-      .post("http://localhost:3001/notification", notificationData)
-      .then((res) => {
-        // Handle the response if needed
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
   
   const handleOnSubmit = (e) => {

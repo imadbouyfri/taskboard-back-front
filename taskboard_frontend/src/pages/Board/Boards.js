@@ -205,6 +205,14 @@ const Boards = () => {
               startIcon={<AddIcon />}
             />
           </div>
+        </div>
+        <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '25px', color: '#274c77'}}>
+          <div style={{display: 'flex', gap: '15px', marginBottom: '25px'}}>
+            <PeopleAltIcon fontSize="large" />
+            <Typography variant="h5" gutterBottom>
+              GROUPS
+            </Typography>
+          </div>
           <div>
             <Button
               style={styles.buttons.addGroup}
@@ -214,12 +222,6 @@ const Boards = () => {
               startIcon={<AddIcon />}
             />
           </div>
-        </div>
-        <div style={{display: 'flex', gap: '5px', marginBottom: '25px', color: '#274c77'}}>
-          <PeopleAltIcon fontSize="large" />
-          <Typography variant="h5" gutterBottom>
-            GROUPS
-          </Typography>
         </div>
         <TableContainer component={Paper} style={{marginBottom: '55px'}}>
           <Table sx={styles.tableStyle} aria-label="customized table">
@@ -261,12 +263,6 @@ const Boards = () => {
                     <TableCell align="center">
                       <Button
                         variant="outlined"
-                        color="success"
-                      >
-                        <MenuIcon/>
-                      </Button>
-                      <Button
-                        variant="outlined"
                         color="warning"
                         sx={{ marginLeft: 2 }}
                         onClick={() => openInPopup(group)}
@@ -297,7 +293,7 @@ const Boards = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <div style={{display: 'flex', gap: '5px', marginBottom: '25px', color: '#274c77'}}>
+        <div style={{display: 'flex', gap: '15px', marginBottom: '25px', color: '#274c77'}}>
           <DashboardIcon fontSize="large" />
           <Typography variant="h5" gutterBottom>
             BOARDS

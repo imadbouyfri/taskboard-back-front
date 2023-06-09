@@ -2,7 +2,7 @@ import { TextField, Grid, Button, Stack, Paper } from "@mui/material";
 import { flexbox } from "@mui/system";
 import axios from "axios";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function BoardForm({ openPopup, setOpenPopup }) {
   const { user } = useSelector((state) => state.auth);
