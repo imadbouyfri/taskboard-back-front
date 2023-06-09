@@ -18,7 +18,6 @@ import UserAvatar from "./avatar/UserAvatar";
 import { Badge, Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FormControlLabel, Switch } from '@mui/material';
-import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
 
 const Header = () => {
@@ -26,6 +25,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [notifications, setNotifications] = useState([]);
+  const [showReadNotifications, setShowReadNotifications] = useState(true);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -142,9 +142,17 @@ const Header = () => {
       console.log(error);
     }
   };
-  
-  // Filter out the notifications with read === false
-  const unreadNotifications = notifications.filter((notification) => !notification.read);
+
+  const handleToggleReadNotifications = () => {
+    setShowReadNotifications(!showReadNotifications);
+  };
+
+  const filteredNotifications = (showReadNotifications === true)
+    ? notifications
+    : notifications.filter((notification) => !notification.read);
+
+  console.log(showReadNotifications);
+  console.log(filteredNotifications);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -181,7 +189,7 @@ const Header = () => {
                           aria-haspopup="true"
                           aria-expanded={open ? 'true' : undefined}
                         >
-                          <Badge color="error" badgeContent={unreadNotifications.length} max={50}>
+                          <Badge color="error" badgeContent={!showReadNotifications ?  filteredNotifications.length : 0} max={50}>
                             <NotificationsIcon />
                           </Badge>
                       </IconButton>
@@ -231,6 +239,7 @@ const Header = () => {
                         <FormControlLabel
                           control={
                             <Switch
+                              checked={showReadNotifications} onChange={handleToggleReadNotifications}
                               onClick={(event) => event.stopPropagation()}
                             />
                           }
@@ -240,8 +249,8 @@ const Header = () => {
                     </div>
                     <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-                      {unreadNotifications.length > 0 ? (
-                        unreadNotifications.map((notification, index) => (
+                      {filteredNotifications.length > 0 ? (
+                        filteredNotifications.map((notification, index) => (
                           <MenuItem key={index}>
                             <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
                               <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -276,7 +285,7 @@ const Header = () => {
                               All the notifications have been read.
                         </MenuItem>
                       )}
-                      {unreadNotifications.length > 0 && (
+                      {filteredNotifications.length > 0 && !showReadNotifications && (
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
                           <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
                             Mark as read
