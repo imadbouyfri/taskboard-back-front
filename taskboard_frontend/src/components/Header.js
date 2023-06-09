@@ -253,7 +253,7 @@ const Header = () => {
                     </div>
                     <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-                      {filteredNotifications ? (
+                      {filteredNotifications && filteredNotifications.length > 0 ? (
                         filteredNotifications.map((notification, index) => (
                           <MenuItem key={index}>
                             <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
@@ -289,7 +289,7 @@ const Header = () => {
                               All the notifications have been read.
                         </MenuItem>
                       )}
-                      {filteredNotifications && !showReadNotifications && (
+                      {filteredNotifications && !showReadNotifications && filteredNotifications.length > 0 && (
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
                           <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
                             Mark as read
