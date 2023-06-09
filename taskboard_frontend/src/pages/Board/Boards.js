@@ -16,6 +16,8 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import BoardStats from "../../components/Board/BoardStats";
+import GroupForm from "../../components/Group/GroupForm";
+import AddIcon from '@mui/icons-material/Add';
 
 const Boards = () => {
   const [recordUpdate, setRecordUpdate] = useState("");
@@ -23,6 +25,7 @@ const Boards = () => {
   const [searched, setSearched] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
   const [openStatsPopup, setOpenStatsPopup] = useState(false);
+  const [openGroupForm, setOpenGroupForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBoard, setSelectedBoard] = useState({});
   const navigate = useNavigate();
@@ -106,6 +109,14 @@ const Boards = () => {
         paddingLeft: 20,
         paddingRight: 20,
       },
+      addGroup: {
+        backgroundColor: "#333996",
+        // margin: 'auto',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+      },
       edit: {
         color: "#ffffff",
         backgroundColor: "#ED6C02",
@@ -163,6 +174,15 @@ const Boards = () => {
               variant="contained"
               children="New Boards"
               onClick={() => setOpenPopup(true)}
+            />
+          </div>
+          <div>
+            <Button
+              style={styles.buttons.addGroup}
+              variant="contained"
+              children="Add Group"
+              onClick={() => setOpenGroupForm(true)}
+              startIcon={<AddIcon />}
             />
           </div>
         </div>
@@ -252,6 +272,18 @@ const Boards = () => {
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           recordUpdate={recordUpdate}
+        />
+      </Popup>
+
+      <Popup
+        title="Add Group"
+        openPopup={openGroupForm}
+        setOpenPopup={setOpenGroupForm}
+      >
+        <GroupForm
+          recordUpdate={recordUpdate}
+          openPopup={openGroupForm}
+          setOpenPopup={setOpenGroupForm}
         />
       </Popup>
       

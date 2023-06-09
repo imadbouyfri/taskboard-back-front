@@ -256,7 +256,7 @@ const Header = () => {
                       {filteredNotifications && filteredNotifications.length > 0 ? (
                         filteredNotifications.map((notification, index) => (
                           <MenuItem key={index}>
-                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}}>
+                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}} onClick={handleMarkAsRead}>
                               <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 {notification.admin && (
                                   <UserAvatar name={notification.admin.name} color={notification.admin.color} />
