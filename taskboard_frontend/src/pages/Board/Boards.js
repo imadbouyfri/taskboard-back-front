@@ -18,10 +18,15 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import BoardStats from "../../components/Board/BoardStats";
 import GroupForm from "../../components/Group/GroupForm";
 import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import Divider from '@mui/material/Divider';
 
 const Boards = () => {
   const [recordUpdate, setRecordUpdate] = useState("");
   const [boards, setBoards] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [searched, setSearched] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
   const [openStatsPopup, setOpenStatsPopup] = useState(false);
@@ -52,9 +57,32 @@ const Boards = () => {
       console.log("error", err);
     }
   };
+
+  const GetGroups = async () => {
+    if (!user) return;
+    const token = user.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    
+    try {
+      const response = await axios.get("http://localhost:3001/group/", config);
+      const { status, message, data } = response;
+      if (status !== 200) {
+        alert(message, status);
+      } else {
+        setGroups(data);
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
   
   useEffect(() => {
     GetBoards();
+    GetGroups();
     setIsLoading(false);
     console.log('board');
   }, [openPopup]);
@@ -110,7 +138,7 @@ const Boards = () => {
         paddingRight: 20,
       },
       addGroup: {
-        backgroundColor: "#333996",
+        backgroundColor: "#023e8a",
         // margin: 'auto',
         paddingTop: 10,
         paddingBottom: 10,
@@ -174,6 +202,7 @@ const Boards = () => {
               variant="contained"
               children="New Boards"
               onClick={() => setOpenPopup(true)}
+              startIcon={<AddIcon />}
             />
           </div>
           <div>
@@ -186,8 +215,95 @@ const Boards = () => {
             />
           </div>
         </div>
+        <div style={{display: 'flex', gap: '5px', marginBottom: '25px', color: '#274c77'}}>
+          <PeopleAltIcon fontSize="large" />
+          <Typography variant="h5" gutterBottom>
+            GROUPS
+          </Typography>
+        </div>
+        <TableContainer component={Paper} style={{marginBottom: '55px'}}>
+          <Table sx={styles.tableStyle} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Groups Name</TableCell>
+                <TableCell align="center">Groups Description</TableCell>
+                <TableCell align="center">Add Members</TableCell>
+                <TableCell align="center">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {groups.length <= 0 ? (<><TableRow><TableCell>No groups available</TableCell></TableRow></>) : groups
+                .filter(
+                  (group) =>
+                    group.name.toLowerCase().includes(searched.toLowerCase()) ||
+                    group.description
+                      .toLowerCase()
+                      .includes(searched.toLowerCase())
+                )
+                .map((group, index) => (
+                  <TableRow
+                    key={group._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {group.name}
+                    </TableCell>
+                    <TableCell
+                      align="center"                      
+                    >
+                      {group.description}
+                    </TableCell>
+                    <TableCell
+                      align="center"                     
+                    >
+                      {group.description}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="outlined"
+                        color="success"
+                      >
+                        <MenuIcon/>
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="warning"
+                        sx={{ marginLeft: 2 }}
+                        onClick={() => openInPopup(group)}
+                      >
+                        <ModeEditOutlineIcon/>
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => deleteBoards(group._id)}
+                        sx={{ marginLeft: 2 }}
+                      >
+                        <DeleteForeverIcon/>
+                      </Button>
+                      {user.role.toLowerCase() === 'admin' && (
+                        <Button
+                          variant="outlined"
+                          color="info"
+                          onClick={() => onBoardStatsClicked(index)}
+                          sx={{ marginLeft: 2 }}
+                        >
+                          <AssessmentIcon/>
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div style={{display: 'flex', gap: '5px', marginBottom: '25px', color: '#274c77'}}>
+          <DashboardIcon fontSize="large" />
+          <Typography variant="h5" gutterBottom>
+            BOARDS
+          </Typography>
+        </div>
         <TableContainer component={Paper}>
-          
           <Table sx={styles.tableStyle} aria-label="customized table">
             <TableHead>
               <TableRow>

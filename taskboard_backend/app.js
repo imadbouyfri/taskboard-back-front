@@ -14,6 +14,7 @@ const listHistoryRoutes = require("./routes/listHistory");
 const cardHistoryRoutes = require("./routes/cardHistory");
 const labelRoutes = require("./routes/labels");
 const notificationRoutes = require("./routes/notifications");
+const groupRoutes = require("./routes/groups");
 
 //Config
 require("dotenv").config();
@@ -43,6 +44,7 @@ app.use("/listHistory", listHistoryRoutes);
 app.use("/cardHistory", cardHistoryRoutes);
 app.use("/label", labelRoutes);
 app.use("/notification", notificationRoutes);
+app.use("/group", groupRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello");
