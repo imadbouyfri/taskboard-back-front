@@ -28,3 +28,17 @@ exports.createGroup = async (req, res) => {
         res.status(500).json({ message: "Failed to create group." });
     }
 };
+
+exports.groupDelete = async (req, res) => {
+    try {
+      const group = await Group.findByIdAndDelete(req.params.id);
+      if (!group) {
+        return res.status(404).json({ error: "Group not found" });
+      }
+      console.log(group);
+      res.json({ message: `Group ${group.name} deleted successfully` });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };

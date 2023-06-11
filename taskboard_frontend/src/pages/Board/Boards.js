@@ -104,6 +104,34 @@ const Boards = () => {
       }
     }
   };
+
+// delete Group
+const deleteGroups = async (id) => {
+  if (!user) return;
+  const token = user.token;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  if (window.confirm("Do you want to delete this group?")) {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/group/${id}`,
+        config
+      );
+      if (response.status === 200) {
+        console.log("Group deleted successfully");
+        GetGroups();
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
+};
+
+
+
   
   // Styling
   const styles = {
@@ -272,7 +300,7 @@ const Boards = () => {
                       <Button
                         variant="outlined"
                         color="error"
-                        onClick={() => deleteBoards(group._id)}
+                        onClick={() => deleteGroups(group._id)}
                         sx={{ marginLeft: 2 }}
                       >
                         <DeleteForeverIcon/>
