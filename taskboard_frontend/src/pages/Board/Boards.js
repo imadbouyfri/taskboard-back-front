@@ -21,7 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import Divider from '@mui/material/Divider';
+import Swal from 'sweetalert2';
 
 const Boards = () => {
   const [recordUpdate, setRecordUpdate] = useState("");
@@ -96,13 +96,32 @@ const Boards = () => {
         Authorization: `Bearer ${token}`
       }
     }
-    if (window.confirm("Do you want to delete this board")) {
-      const response = await axios.patch(`http://localhost:3001/board/${id}`, { active: false }, config);
-      if (response.status === 200) {
-        console.log("Board deleted successfully");
-        GetBoards();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.patch(`http://localhost:3001/board/${id}`, { active: false }, config);
+          if (response.status === 200) {
+            Swal.fire(
+              'Deleted!',
+              'Your group has been deleted.',
+              'success'
+            );
+            console.log("Board deleted successfully");
+            GetBoards();
+          }
+        } catch (err) {
+          console.log("error", err);
+        }
       }
-    }
+    });
   };
 
 // delete Group
@@ -114,21 +133,38 @@ const deleteGroups = async (id) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  if (window.confirm("Do you want to delete this group?")) {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3001/group/${id}`,
-        config
-      );
-      if (response.status === 200) {
-        console.log("Group deleted successfully");
-        GetGroups();
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3001/group/${id}`,
+          config
+        );
+        if (response.status === 200) {
+          Swal.fire(
+            'Deleted!',
+            'Your group has been deleted.',
+            'success'
+          );
+          console.log("Group deleted successfully");
+          GetGroups();
+        }
+      } catch (err) {
+        console.log("error", err);
       }
-    } catch (err) {
-      console.log("error", err);
     }
-  }
+  });
 };
+
 
 
 
