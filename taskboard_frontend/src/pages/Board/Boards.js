@@ -231,6 +231,11 @@ const deleteGroups = async (id) => {
     setRecordUpdate(item);
     setOpenPopup(!openPopup);
   };
+
+  const openEditPopup = (item) => {
+    setRecordUpdate(item);
+    setOpenGroupForm(!openGroupForm)
+  };
   
   const handleOnClickRow = (id) => {
     navigate(`/taskboard/${id}`);
@@ -329,7 +334,7 @@ const deleteGroups = async (id) => {
                         variant="outlined"
                         color="warning"
                         sx={{ marginLeft: 2 }}
-                        onClick={() => openInPopup(group)}
+                        onClick={() => openEditPopup(group)}
                       >
                         <ModeEditOutlineIcon/>
                       </Button>
@@ -450,16 +455,18 @@ const deleteGroups = async (id) => {
           recordUpdate={recordUpdate}
         />
       </Popup>
-
       <Popup
-        title="Add Group"
         openPopup={openGroupForm}
         setOpenPopup={setOpenGroupForm}
+        setRecordUpdate={setRecordUpdate}
+        recordUpdate={recordUpdate}
+        title={recordUpdate ? "Update Group" : "New Group"}
       >
         <GroupForm
-          recordUpdate={recordUpdate}
           openPopup={openGroupForm}
           setOpenPopup={setOpenGroupForm}
+          recordUpdate={recordUpdate}
+          getGroups={GetGroups} // Pass the GetGroups function as a prop
         />
       </Popup>
       

@@ -42,3 +42,13 @@ exports.groupDelete = async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   };
+
+  exports.groupUpdate = async (req, res) => {
+    try {
+      console.log('body', req.body);
+      await Group.findByIdAndUpdate(req.params.id, req.body);
+      res.send("Group updated successfully");
+    } catch (err) {
+      console.log(err);
+    }
+  };

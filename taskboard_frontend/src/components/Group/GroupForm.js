@@ -1,100 +1,92 @@
-import { TextField, Grid, Button, Stack, Paper } from "@mui/material";
-import { flexbox } from "@mui/system";
+import React, { useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import Swal from 'sweetalert2';
 import { useSelector } from "react-redux";
 
-function BoardForm({ openPopup, setOpenPopup }) {
+const GroupForm = ({ openPopup, setOpenPopup, recordUpdate, getGroups }) => {
+  const [groupName, setGroupName] = useState(recordUpdate ? recordUpdate.name : "");
+  const [groupDescription, setGroupDescription] = useState(recordUpdate ? recordUpdate.description : "");
   const { user } = useSelector((state) => state.auth);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
 
-  const styles = {
-    form: {
-      display: flexbox,
-    },
-    container: {
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    inputStyle: {
-      width: "100%",
-      "&:not(:last-child)": {
-        marginBottom: 5,
-      },
-    },
-    submit: {
-      textAlign: "center",
-    },
-    paper: {
-      margin: "auto",
-      paddingTop: 2,
-      paddingBottom: 8,
-      paddingLeft: 5,
-      paddingRight: 5,
-      width: "100%",
-    },
+  const handleClose = () => {
+    setOpenPopup(false);
+    setGroupName("");
+    setGroupDescription("");
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) return;
     const token = user.token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
+        Authorization: `Bearer ${token}`
+      }
+    }
+    const groupData = {
+      name: groupName,
+      description: groupDescription
     };
+  
     try {
-      const response = await axios.post(
-        "http://localhost:3001/group",
-        { name, description },
-        config
-      );
-      // Handle the response if needed
-      console.log(response);
-      setOpenPopup(false);
-    } catch (error) {
-      console.log(error);
+      let response;
+      if (recordUpdate) {
+        response = await axios.patch(`http://localhost:3001/group/${recordUpdate._id}`, groupData, config);
+        getGroups();
+      } else {
+        response = await axios.post("http://localhost:3001/group/", groupData, config);
+        getGroups();
+      }
+      
+      if (response.status === 200) {
+        Swal.fire(
+          'Saved!',
+          'Your group has been saved.',
+          'success'
+        ).then(() => {
+          handleClose();
+        });
+      }
+    } catch (err) {
+      console.log("error", err);
     }
   };
 
   return (
-    <>
-      <Paper elevation={0} sx={styles.paper}>
-        <form onSubmit={handleOnSubmit}>
-          <Grid container sx={styles.container}>
-            <Grid item>
-              <TextField
-                variant="outlined"
-                label="Group Name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={styles.inputStyle}
-              />
-              <TextField
-                variant="outlined"
-                label="Group Description"
-                name="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                sx={styles.inputStyle}
-              />
-              <Stack spacing={2} direction="row">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  children="Submit"
-                  size="large"
-                  sx={styles.submit}
-                />
-              </Stack>
-            </Grid>
-          </Grid>
+    <Dialog open={openPopup} onClose={handleClose}>
+      <DialogTitle>{recordUpdate ? "Update Group" : "Add Group"}</DialogTitle>
+      <DialogContent>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Group Name"
+            type="text"
+            fullWidth
+            required
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            style={{ marginBottom: '30px' }}
+          />
+          <TextField
+            margin="dense"
+            label="Group Description"
+            type="text"
+            fullWidth
+            required
+            value={groupDescription}
+            onChange={(e) => setGroupDescription(e.target.value)}
+            style={{ marginBottom: '30px' }}
+          />
+          <DialogActions>
+            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+            <Button variant="contained" type="submit">Save</Button>
+          </DialogActions>
         </form>
-      </Paper>
-    </>
+      </DialogContent>
+    </Dialog>
   );
-}
+};
 
-export default BoardForm;
+export default GroupForm;
