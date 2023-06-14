@@ -1,13 +1,16 @@
 import { TextField, Grid, Button, Stack, Paper } from "@mui/material";
+import { flexbox } from "@mui/system";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
-function GroupForm({ recordUpdate, openPopup, setOpenPopup, GetGroups }) {
+function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", description: "" });
   const { name, description } = state;
   const { user } = useSelector((state) => state.auth);
+
+  console.log(recordUpdate);
 
   const styles = {
     form: {

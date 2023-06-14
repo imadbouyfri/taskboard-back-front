@@ -236,6 +236,11 @@ const deleteGroups = async (id) => {
     setRecordUpdate(item);
     setOpenGroupForm(!openGroupForm)
   };
+
+  const openGroupPopup = () => {
+    setRecordUpdate();
+    setOpenGroupForm(!openGroupForm)
+  };
   
   const handleOnClickRow = (id) => {
     navigate(`/taskboard/${id}`);
@@ -287,7 +292,7 @@ const deleteGroups = async (id) => {
               style={styles.buttons.addGroup}
               variant="contained"
               children="Add Group"
-              onClick={() => setOpenGroupForm(true)}
+              onClick={() => openGroupPopup()}
               startIcon={<AddIcon />}
             />
           </div>
