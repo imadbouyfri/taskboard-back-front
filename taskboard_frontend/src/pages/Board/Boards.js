@@ -480,6 +480,7 @@ const deleteGroups = async (id) => {
           openPopup={openStatsPopup}
           setOpenPopup={setOpenStatsPopup}
           board={selectedBoard}
+          GetGroups= {GetGroups()}
         />
       </Popup>
     </>

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
+function GroupForm({ recordUpdate, openPopup, setOpenPopup, GetGroups }) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", description: "" });
   const { name, description } = state;
   const { user } = useSelector((state) => state.auth);
@@ -51,6 +51,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
   const addGroup = async (data) => {
     try {
       await axios.post("http://localhost:3001/group", data, config);
+      GetGroups();
     } catch (err) {
       console.log(err);
     }
@@ -60,6 +61,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
     axios
       .patch(`http://localhost:3001/group/${state._id}`, { name: data.name, description: data.description }, config)
       .then((res) => {
+        GetGroups();
         console.log(res.data);
       })
       .catch((err) => {
