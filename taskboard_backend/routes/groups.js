@@ -8,7 +8,7 @@ const {
 } = require("../controllers/groupController");
 const { protect } = require('../middleware/authMiddleware');
 router.get("/", protect, allGroups);
-router.post("/", createGroup);
+router.post("/", protect, createGroup);
 router.delete("/:id", groupDelete);
 router.patch("/:id", groupUpdate);
 

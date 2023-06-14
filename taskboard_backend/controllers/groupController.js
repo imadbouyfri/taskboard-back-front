@@ -1,4 +1,6 @@
 const Group = require("../models/group");
+const Member = require("../models/member");
+const Permission = require("../models/permission");
 
 exports.allGroups = async (req, res) => {
     try {
@@ -18,19 +20,32 @@ exports.createGroup = async (req, res) => {
   try {
     const { name, description, creator } = req.body;
 
-    const newGroup = new Group({
+    // Create a new group
+    const group = new Group({
       name,
       description,
       creator,
     });
-    
-    await newGroup.save();
-    res.status(201).json({ message: "Group created successfully." });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Failed to create group." });
+
+    // Create a new permission for the group
+    const permission = await Permission.create({
+      group: group._id,
+      user: req.member.id,
+      role: "admin",
+    });
+
+    // Retrieve the member logged in
+    const member = await Member.findById(req.member.id, "permissions");
+    // Adding the new Permission into the member logged in and the new group
+    await Member.updateOne({ _id: req.member.id }, { permissions: [...member.permissions, permission._id] });
+    group.permissions.push(permission._id);
+    await group.save();
+    res.json(group);
+  } catch (err) {
+    console.log(err);
   }
 };
+
 
 exports.groupDelete = async (req, res) => {
     try {
