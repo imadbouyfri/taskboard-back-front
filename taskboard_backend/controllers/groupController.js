@@ -2,7 +2,7 @@ const Group = require("../models/group");
 
 exports.allGroups = async (req, res) => {
     try {
-        const groups = await Group.find().populate({
+        const groups = await Group.find({ creator: req.member.id }).populate({
             path: 'members',
             model: 'Member',
             select: 'name',
