@@ -10,13 +10,21 @@ const groupSchema = new mongoose.Schema(
         type: String,
         required: [true, 'Please enter a group description'],
     },
-    role: {
-        type: String,
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Member",
     },
     members: [
         {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Member",
+            member: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Member",
+            },
+            role: {
+                type: String,
+                enum: ["admin", "member"],
+                default: "member",
+            },
         },
     ],
     },

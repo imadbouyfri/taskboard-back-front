@@ -15,18 +15,21 @@ exports.allGroups = async (req, res) => {
 };
 
 exports.createGroup = async (req, res) => {
-    try {
-        const { name, description } = req.body;
-        const newGroup = new Group({
-            name,
-            description,
-        });
-        await newGroup.save();
-        res.status(201).json({ message: "Group created successfully." });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Failed to create group." });
-    }
+  try {
+    const { name, description, creator } = req.body;
+
+    const newGroup = new Group({
+      name,
+      description,
+      creator,
+    });
+    
+    await newGroup.save();
+    res.status(201).json({ message: "Group created successfully." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to create group." });
+  }
 };
 
 exports.groupDelete = async (req, res) => {

@@ -9,6 +9,10 @@ const memberSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
     },
+    group: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Group",
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Member",

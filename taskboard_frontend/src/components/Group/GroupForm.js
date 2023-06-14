@@ -49,8 +49,12 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
     },
   };
 
+
   const addGroup = async (data) => {
     try {
+      // Set the creator ID in the data object
+      data.creator = user._id;
+  
       await axios.post("http://localhost:3001/group", data, config);
       Swal.fire("Success", "Group added successfully!", "success");
       console.log(data);
@@ -58,6 +62,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
       console.log(err);
     }
   };
+  
 
   const updateGroup = (data) => {
     axios
