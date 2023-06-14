@@ -10,8 +10,6 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
   const { name, description } = state;
   const { user } = useSelector((state) => state.auth);
 
-  console.log(recordUpdate);
-
   const styles = {
     form: {
       display: "flex",
@@ -55,6 +53,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
     try {
       await axios.post("http://localhost:3001/group", data, config);
       Swal.fire("Success", "Group added successfully!", "success");
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
