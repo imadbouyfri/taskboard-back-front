@@ -1,8 +1,8 @@
 import { TextField, Grid, Button, Stack, Paper } from "@mui/material";
-import { flexbox } from "@mui/system";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function GroupForm({ recordUpdate, openPopup, setOpenPopup, GetGroups }) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", description: "" });
@@ -51,7 +51,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup, GetGroups }) {
   const addGroup = async (data) => {
     try {
       await axios.post("http://localhost:3001/group", data, config);
-      GetGroups();
+      Swal.fire("Success", "Group added successfully!", "success");
     } catch (err) {
       console.log(err);
     }
@@ -61,7 +61,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup, GetGroups }) {
     axios
       .patch(`http://localhost:3001/group/${state._id}`, { name: data.name, description: data.description }, config)
       .then((res) => {
-        GetGroups();
+        Swal.fire("Success", "Group updated successfully!", "success");
         console.log(res.data);
       })
       .catch((err) => {
