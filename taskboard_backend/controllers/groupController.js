@@ -17,34 +17,42 @@ exports.allGroups = async (req, res) => {
 };
 
 exports.createGroup = async (req, res) => {
-  try {
-    const { name, description, creator } = req.body;
-
-    // Create a new group
-    const group = new Group({
-      name,
-      description,
-      creator,
-    });
-
-    // Create a new permission for the group
-    const permission = await Permission.create({
-      group: group._id,
-      user: req.member.id,
-      role: "admin",
-    });
-
-    // Retrieve the member logged in
-    const member = await Member.findById(req.member.id, "permissions");
-    // Adding the new Permission into the member logged in and the new group
-    await Member.updateOne({ _id: req.member.id }, { permissions: [...member.permissions, permission._id] });
-    group.permissions.push(permission._id);
-    await group.save();
-    res.json(group);
-  } catch (err) {
-    console.log(err);
-  }
-};
+    try {
+      const { name, description, creator } = req.body;
+  
+      // Create a new group
+      const group = new Group({
+        name,
+        description,
+        creator,
+      });
+  
+      // Create a new permission for the group
+      const permission = await Permission.create({
+        group: group._id,
+        user: req.member.id,
+        role: "admin",
+      });
+  
+      // Retrieve the member logged in
+      const member = await Member.findById(req.member.id, "permissions");
+  
+      // Adding the new Permission into the member logged in and the new group
+      await Member.updateOne({ _id: req.member.id }, { permissions: [...member.permissions, permission._id] });
+      group.permissions.push(permission._id);
+  
+      // Save the group
+      await group.save();
+  
+      // Populate the 'permissions' field of the group before sending the response
+      const populatedGroup = await Group.findById(group._id).populate('permissions');
+  
+      res.json(populatedGroup);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
 
 
 exports.groupDelete = async (req, res) => {
