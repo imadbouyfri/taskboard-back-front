@@ -9,6 +9,7 @@ import Spinner from "../../components/Spinner";
 import InviteMember from '../../components/Member/InviteMember';
 import UserAvatar from "../../components/avatar/UserAvatar";
 import './group.css';
+import { avatarColors } from '../../data/avatarColors';
 import Popup from "../Board/Popup";
 
 const Group = () => {
@@ -21,6 +22,8 @@ const Group = () => {
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
     const { id } = useParams();
+
+    
     
     // getting group data from DB
     const getSingleGroup = async () => {
@@ -34,7 +37,7 @@ const Group = () => {
         try {
         const response = await axios.get(`http://localhost:3001/group/${id}`, config);
         setGroup(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         } catch (err) {
         console.log(err);
         }
@@ -50,47 +53,48 @@ const Group = () => {
           }
         }
         try {
-          // get invited members
-          const response2 = await axios.get(`http://localhost:3001/member/group/${id}`);
-          console.log(response2);
-          const allInvitedMember = response2.data.map((member) => (
-            { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
-          ))
-          setInvitedMembers(allInvitedMember);
-          console.log(invitedMembers);
+            // get invited members
+            const response2 = await axios.get(`http://localhost:3001/member/group/${id}`);
+            //   console.log(response2);
+            const allInvitedMember = response2.data.map((member) => (
+                { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
+            ))
+            setInvitedMembers(allInvitedMember);
+            //   console.log(invitedMembers);
           // get All members
-          const response1 = await axios.get("http://localhost:3001/member", config);
-          const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
+            const response1 = await axios.get("http://localhost:3001/member", config);
+            const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
           // checking for duplicated values
-          for (let i = 0; i < allInvitedMember.length; i++) {
-            const index = Member.findIndex((mem) => {
-              return mem._id === allInvitedMember[i]._id;
-            })
-            Member.splice(index, 1);
-          }
-          setAllMembers(Member);
+            for (let i = 0; i < allInvitedMember.length; i++) {
+                const index = Member.findIndex((mem) => {
+                    return mem._id === allInvitedMember[i]._id;
+                })
+                Member.splice(index, 1);
+            }
+            setAllMembers(Member);
         } catch (err) {
-          console.log(err)
+            console.log(err)
         }
-      }
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         setIsLoading(true);
         setTimeout(() => {
-          getAllMembers();
-          setIsLoading(false);
-        }, 300);
-      }, [id]);
-      
-      useEffect(() => {
         getSingleGroup();
         getAllMembers();
         setIsLoading(false);
-      }, [openMemPopup]);
+        }, 300);
+    }, [id]);
 
-      if (isLoading) {
+    useEffect(() => {
+        getSingleGroup();
+        getAllMembers();
+        setIsLoading(false);
+    }, [openMemPopup]);
+
+    if (isLoading) {
         return <Spinner/>
-      }
+    }
 
     const BoardStyle = {
         paddingTop: 15,
@@ -159,10 +163,19 @@ const Group = () => {
         }
     };
 
+    const letters = group.name.split(' ');
+    const avatar = letters[0].slice(0, 1).toUpperCase() + letters[1].slice(0, 1).toUpperCase();
+
 
     return (
         <>
             <Paper>
+            <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                        <div>{group.name}</div>
+                        <div style={{ backgroundColor: avatarColors[group.color], color: '#FFFFFF' }} className="profile-avatar">
+          {avatar}
+        </div>
+                      </div>
             <div style={BoardStyle.topBar}>
           <div style={BoardStyle.leftSide}>
             <div style={BoardStyle.members}>
