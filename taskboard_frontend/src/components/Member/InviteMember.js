@@ -94,7 +94,7 @@ export default function InviteMember({
           board: boardId,
           admin: admin._id,
         };
-        // console.log(data);
+        console.log(data);
         await axios.post("http://localhost:3001/notification", data);
     }
   
@@ -141,7 +141,7 @@ export default function InviteMember({
           group: groupId,
           admin: invitedMembers[i]._id,
         }
-        // console.log(boardId)
+        console.log(data1)
         
         if (!user) return;
         const token = user.token;

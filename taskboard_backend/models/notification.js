@@ -13,6 +13,10 @@ const notificationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Board",
     },
+    group: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "group",
+    },
     card: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Card",
