@@ -329,11 +329,10 @@ const deleteGroups = async (id) => {
                       {group.description}
                     </TableCell>
                     <TableCell align="center">
-                    <Link to={`/group/${group._id}`}>
-                      <Button variant="contained">Contained</Button>
-                    </Link>
-</TableCell>
-
+                      <Link to={`/group/${group._id}`}>
+                        <Button variant="contained">Add Members</Button>
+                      </Link>
+                    </TableCell>
                     <TableCell align="center">
                       <Button
                         variant="outlined"
