@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const Member = require("../models/member");
 const Board = require("../models/board");
+const Group = require("../models/group");
 
 exports.registerMember = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -113,6 +114,25 @@ exports.getMembersOfBoard = asyncHandler(async (req, res) => {
       }
     });
     const users = board.permissions.map((permission) => ({ user: permission.user, role: permission.role }));
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+exports.getMembersOfGroup = asyncHandler(async (req, res) => {
+  try {
+    // const members = await Member.find().populate('permissions').populate("permissions");
+    const group = await Group.findById(req.params.groupId, 'name description createdAt updatedAt').populate({
+      path: 'permissions',
+      select: 'role group',
+      populate: {
+        path: 'user',
+        model: 'Member',
+        select: 'name email color'
+      }
+    });
+    const users = group.permissions.map((permission) => ({ user: permission.user, role: permission.role }));
     res.status(200).json(users);
   } catch (err) {
     console.log(err);

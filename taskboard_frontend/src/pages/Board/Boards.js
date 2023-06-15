@@ -21,10 +21,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import InviteMember from '../../components/Member/InviteMember';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Swal from 'sweetalert2';
-import UserAvatar from "../../components/avatar/UserAvatar";
+import { Link } from 'react-router-dom';
 
 const Boards = () => {
   const [recordUpdate, setRecordUpdate] = useState("");
@@ -36,11 +34,9 @@ const Boards = () => {
   const [openGroupForm, setOpenGroupForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBoard, setSelectedBoard] = useState({});
-  const [allMembers, setAllMembers] = useState([]);
-  const [invitedMembers, setInvitedMembers] = useState([]);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  
+
   const GetBoards = async () => {
     if (!user) return;
     const token = user.token;
@@ -84,6 +80,7 @@ const Boards = () => {
       console.log("error", err);
     }
   };
+
   
   useEffect(() => {
     GetBoards();
@@ -169,75 +166,6 @@ const deleteGroups = async (id) => {
     }
   });
 };
-
-
-
-const BoardStyle = {
-  paddingTop: 15,
-  backgroundColor: "#FFFFFF",
-  minHeight: "86vh",
-  display: "flex",
-  alignItems: "flex-start",
-  topBar: {
-    marginRight: '20px',
-    marginLeft: '20px',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 7
-  },
-  leftSide: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'start',
-    paddingTop: 7
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: "1.3rem",
-    color: "#495151",
-  },
-  members: {
-    marginLeft: 20,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  separator: {
-    height: 18, borderRight: '1px solid #a6a6a6', marginRight: 7
-  },
-  membersAvatars: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  historyButton: {
-    transition: 'background-color 100ms',
-    color: "#FFF",
-    backgroundColor: '#1976D2',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '6px',
-    paddingLeft: '8px',
-    paddingRight: '8px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    '&:hover': {
-      color: "#000"
-    }
-  },
-  rightSide: {
-    width: '28%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  }
-};
   
   // Styling
   const styles = {
@@ -312,6 +240,7 @@ const BoardStyle = {
     setOpenGroupForm(!openGroupForm)
   };
   
+  
   const handleOnClickRow = (id) => {
     navigate(`/taskboard/${id}`);
   };
@@ -324,38 +253,6 @@ const BoardStyle = {
     setSelectedBoard(boards[boardId]);
     setOpenStatsPopup(true);
   }
-
-    // get Members
-    const getAllMembers = async () => {
-      if (!user) return;
-      const token = user.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-      try {
-        // get invited members
-        const response2 = await axios.get(`http://localhost:3001/member`);
-        const allInvitedMember = response2.data.map((member) => (
-          { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
-        ))
-        setInvitedMembers(allInvitedMember);
-        // get All members
-        const response1 = await axios.get("http://localhost:3001/member", config);
-        const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
-        // checking for duplicated values
-        for (let i = 0; i < allInvitedMember.length; i++) {
-          const index = Member.findIndex((mem) => {
-            return mem._id === allInvitedMember[i]._id;
-          })
-          Member.splice(index, 1);
-        }
-        setAllMembers(Member);
-      } catch (err) {
-        console.log(err)
-      }
-    }
   
   return (
     <>
@@ -431,23 +328,12 @@ const BoardStyle = {
                     >
                       {group.description}
                     </TableCell>
-                    <TableCell
-                      align="center"                     
-                    >
-                      <div style={BoardStyle.members}>
-                      <p style={BoardStyle.separator}></p>
-                      <div className='membersAvatars' style={BoardStyle.membersAvatars}>
-                {invitedMembers.map((member) => (
-                  <UserAvatar key={member.name} name={member.name} color={member.color}/>
-                ))}
-              </div>
-              {/*Share*/}
-              <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
-                      onClick={() => setOpenPopup(true)}>
-                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
-              </Button>
-            </div>
-                    </TableCell>
+                    <TableCell align="center">
+                    <Link to={`/group/${group._id}`}>
+                      <Button variant="contained">Contained</Button>
+                    </Link>
+</TableCell>
+
                     <TableCell align="center">
                       <Button
                         variant="outlined"

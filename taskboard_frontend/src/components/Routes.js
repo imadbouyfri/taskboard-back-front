@@ -8,6 +8,7 @@ import Login from "../pages/Authentification/Login";
 import Register from "../pages/Authentification/Register";
 import BoardPage from "../pages/Board/BoardPage";
 import Profile from "../pages/profile/Profile";
+import Group from "../pages/Group/Group";
 import Users from "../pages/Users/Users";
 import UserBoards from "../pages/Users/UserBoards";
 
@@ -27,6 +28,7 @@ const MainRoutes = () => {
         </Route>
         <Route path="update/:id" element={<BoardForm/>}/>
         <Route path="cardinfo/:id" element={<CardInfo/>}/>
+        <Route path="group/:id" element={<Group/>}/>
       </Route>
     </Routes>
   );

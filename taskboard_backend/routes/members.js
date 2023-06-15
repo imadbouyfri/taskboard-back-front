@@ -6,6 +6,7 @@ const {
   loginMember,
   getMe,
   getMembersOfBoard,
+  getMembersOfGroup,
   updateMember
 } = require("../controllers/memberController");
 
@@ -17,5 +18,6 @@ router.patch("/:memberId", updateMember);
 router.get("/me", getMe);
 router.get("/", getAllMembers);
 router.get("/:boardId", getMembersOfBoard);
+router.get("/group/:groupId", getMembersOfGroup);
 
 module.exports = router;
