@@ -12,7 +12,7 @@ import './group.css';
 import Popup from "../Board/Popup";
 
 const Group = () => {
-    const [groups, setGroups] = useState([]);
+    const [group, setGroup] = useState([]);
     const [openMemPopup, setOpenMemPopup] = useState(false);
     const [allMembers, setAllMembers] = useState([]);
     const [invitedMembers, setInvitedMembers] = useState([]);
@@ -22,27 +22,23 @@ const Group = () => {
     const { user } = useSelector((state) => state.auth);
     const { id } = useParams();
     
-      const GetGroups = async () => {
+    // getting group data from DB
+    const getSingleGroup = async () => {
         if (!user) return;
         const token = user.token;
         const config = {
-          headers: {
+        headers: {
             Authorization: `Bearer ${token}`
-          }
         }
-        
+        }
         try {
-          const response = await axios.get("http://localhost:3001/group/", config);
-          const { status, message, data } = response;
-          if (status !== 200) {
-            alert(message, status);
-          } else {
-            setGroups(data);
-          }
+        const response = await axios.get(`http://localhost:3001/group/${id}`, config);
+        setGroup(response.data);
+        console.log(response.data);
         } catch (err) {
-          console.log("error", err);
+        console.log(err);
         }
-      };
+    };
     
       // get Members
       const getAllMembers = async () => {
@@ -60,8 +56,8 @@ const Group = () => {
           const allInvitedMember = response2.data.map((member) => (
             { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
           ))
-          console.log(allInvitedMember);
           setInvitedMembers(allInvitedMember);
+          console.log(invitedMembers);
           // get All members
           const response1 = await axios.get("http://localhost:3001/member", config);
           const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
@@ -87,16 +83,10 @@ const Group = () => {
       }, [id]);
       
       useEffect(() => {
-        GetGroups();
+        getSingleGroup();
         getAllMembers();
         setIsLoading(false);
-        console.log('group');
       }, [openMemPopup]);
-
-      const openInPopup = (item) => {
-        setRecordUpdate(item);
-        setOpenMemPopup(!openMemPopup);
-      };
 
       if (isLoading) {
         return <Spinner/>
@@ -176,7 +166,7 @@ const Group = () => {
             <div style={BoardStyle.topBar}>
           <div style={BoardStyle.leftSide}>
             <div style={BoardStyle.members}>
-              <p style={BoardStyle.separator}></p>
+              <p style={BoardStyle.separator}>{group.name}</p>
               <div className='membersAvatars' style={BoardStyle.membersAvatars}>
                 {invitedMembers.map((member) => (
                   <UserAvatar key={member.name} name={member.name} color={member.color}/>
@@ -208,6 +198,7 @@ const Group = () => {
                 setOpenPopup={setOpenMemPopup}
                 recordUpdate={recordUpdate}
                 user={user}
+                groupId={id}
                 />
             </Popup>
         </>

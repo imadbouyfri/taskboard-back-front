@@ -52,12 +52,15 @@ export default function InviteMember({
   setInvitedMembers,
   user,
   boardId,
+  groupId,
   boardName
 }) {
   
   const [selectedMembers, setSelectedMembers] = useState([]);
   const roleChange = invitedMembers.filter((member) => member.name === user.name)[0].role === "admin";
   const [adminError, setAdminError] = useState(false);
+
+  console.log(selectedMembers);
   
   const handleChange = async (e) => {
     if (e.target.value === "invited") {
@@ -78,17 +81,20 @@ export default function InviteMember({
       await axios.patch("http://localhost:3001/permission", {
         user: memberChanged._id,
         board: boardId,
+        group: groupId,
         role: e.target.value
       });
+      // console.log(memberChanged);
       if (e.target.value === "admin") {
         const admin = invitedMembers.filter((member) => member.role === 'admin')[0];
         const data = {
           user: memberChanged._id,
           action: "role",
+          group: groupId,
           board: boardId,
           admin: admin._id,
         };
-        console.log(data);
+        // console.log(data);
         await axios.post("http://localhost:3001/notification", data);
     }
   
@@ -123,16 +129,19 @@ export default function InviteMember({
       try {
         const data = {
           board: boardId,
+          group: groupId,
           user: newInvitedMembers[i]._id,
           role: "invited"
         }
+        console.log(data);
         const data1 = {
           user: newInvitedMembers[i]._id,
           action: "add",
           board: boardId,
+          group: groupId,
           admin: invitedMembers[i]._id,
         }
-        console.log(boardId)
+        // console.log(boardId)
         
         if (!user) return;
         const token = user.token;
@@ -172,7 +181,7 @@ export default function InviteMember({
                 renderInput={(params) => (
                   <TextField {...params} label="Size small" placeholder="Favorites"/>
                 )}
-                onChange={(e, value) => {setSelectedMembers(value)}}
+                onChange={(e, value) => {setSelectedMembers(value)}} 
               />
               {/*<Button component={'submit'} sx={{ marginLeft: 2 }} variant={'contained'} children={'Share'} />*/}
               <input className={'shareButton'} type="submit" value={'Share'}/>

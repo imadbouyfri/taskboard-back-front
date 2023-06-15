@@ -53,7 +53,22 @@ exports.createGroup = async (req, res) => {
     }
   };
   
-
+  exports.groupById = async (req, res) => {
+    try {
+      let newGroup = await Group.findById(req.params.id).populate({
+        path: 'permissions',
+        select: 'user role',
+        populate: {
+          path: 'user',
+          model: 'Member',
+          select: 'name email'
+        }
+      });
+      res.json(newGroup);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 exports.groupDelete = async (req, res) => {
     try {
