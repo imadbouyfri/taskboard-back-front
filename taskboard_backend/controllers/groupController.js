@@ -18,13 +18,14 @@ exports.allGroups = async (req, res) => {
 
 exports.createGroup = async (req, res) => {
     try {
-      const { name, description, creator } = req.body;
+      const { name, description, creator} = req.body;
   
       // Create a new group
       const group = new Group({
         name,
         description,
         creator,
+        color: Math.floor(Math.random() * 4),
       });
   
       // Create a new permission for the group

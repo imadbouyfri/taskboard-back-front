@@ -6,6 +6,9 @@ const groupSchema = new mongoose.Schema(
         type: String,
         required: [true, 'Please enter a group name'],
     },
+    color: {
+      type: Number,
+    },
     description: {
         type: String,
         required: [true, 'Please enter a group description'],

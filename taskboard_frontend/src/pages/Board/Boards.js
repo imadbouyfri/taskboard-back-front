@@ -22,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Swal from 'sweetalert2';
+import UserAvatar from "../../components/avatar/UserAvatar";
 import { Link } from 'react-router-dom';
 
 const Boards = () => {
@@ -321,7 +322,10 @@ const deleteGroups = async (id) => {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {group.name}
+                      <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                        <div><UserAvatar key={group.name} name={group.name} color={group.color}/></div>
+                        <div>{group.name}</div>
+                      </div>
                     </TableCell>
                     <TableCell
                       align="center"                      
