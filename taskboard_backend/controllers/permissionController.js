@@ -46,8 +46,15 @@ exports.addPermission = async (req, res) => {
 exports.updatePermission = async (req, res) => {
   try {
     console.log('body', req.body);
-    const permission = await Permission.updateOne({board: req.body.board, user: req.body.user}, { role: req.body.role });
-    res.send(permission);
+    if(req.body.board){
+      const permission = await Permission.updateOne({board: req.body.board, user: req.body.user}, { role: req.body.role });
+      res.send(permission);
+    }
+    
+    if(req.body.group){
+      const permission = await Permission.updateOne({group: req.body.group, user: req.body.user}, { role: req.body.role });
+      res.send(permission);
+    }
   } catch(err) {
     console.log(err);
   }
