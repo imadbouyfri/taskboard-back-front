@@ -20,6 +20,11 @@ exports.getAllNotifications = async (req, res) => {
           path: "card",
           model: "Card",
           select: "name",
+        })
+        .populate({
+          path: "group",
+          model: "Group",
+          select: "name",
         });
   
       if (notifications.length === 0) {
@@ -36,7 +41,7 @@ exports.getAllNotifications = async (req, res) => {
 // Create a new notification
 exports.createNotification = async (req, res) => {
     try {
-      const { user, action, board, admin, card } = req.body;
+      const { user, action, board, admin, card, group } = req.body;
   
       const newNotification = new Notification({
         user,
@@ -44,6 +49,7 @@ exports.createNotification = async (req, res) => {
         board,
         admin,
         card,
+        group,
       });
   
       await newNotification.save();

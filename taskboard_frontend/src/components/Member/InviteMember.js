@@ -133,7 +133,7 @@ export default function InviteMember({
           user: newInvitedMembers[i]._id,
           role: "invited"
         }
-        console.log(data);
+        // console.log(data);
         const data1 = {
           user: newInvitedMembers[i]._id,
           action: "add",

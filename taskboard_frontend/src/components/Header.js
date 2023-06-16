@@ -256,7 +256,11 @@ const Header = () => {
                       {filteredNotifications && filteredNotifications.length > 0 ? (
                         filteredNotifications.map((notification, index) => (
                           <MenuItem key={index}>
-                            <Link to={`/taskboard/${notification.board._id}`} style={{ textDecoration: 'none', color: 'black'}} onClick={handleMarkAsRead}>
+                            <Link
+                              to={notification.board ? `/taskboard/${notification.board._id}` : '/board'}
+                              style={{ textDecoration: 'none', color: 'black'}}
+                              onClick={handleMarkAsRead}
+                            >
                               <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 {notification.admin && (
                                   <UserAvatar name={notification.admin.name} color={notification.admin.color} />
@@ -268,7 +272,7 @@ const Header = () => {
                                       <span style={{ color: 'blue' }}>{notification.board.name}</span>
                                     </>
                                   )}
-                                  {!notification.card && (
+                                  {!notification.card && notification.board && (
                                       <>
                                       {notification.admin.name}{' '}
                                       {notification.action === "add" ? "added you to" :
@@ -279,6 +283,12 @@ const Header = () => {
                                     </>
                                     )
                                   }
+                                  {notification.group && (
+                                      <>
+                                      {notification.admin.name} assigned you to the group {' '}
+                                      <span style={{ color: 'blue' }}>{notification.group.name}</span>
+                                    </>
+                                  )}
                               </div>
                               </div>
                             </Link>
