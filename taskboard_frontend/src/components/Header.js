@@ -274,20 +274,24 @@ const Header = () => {
                                   )}
                                   {!notification.card && notification.board && (
                                       <>
-                                      {notification.admin.name}{' '}
-                                      {notification.action === "add" ? "added you to" :
-                                      notification.action === "role" ? "added you as an admin" :
-                                      notification.action === "assign" ? "assigned a task to you" :
-                                      notification.action === "update" ? "updated" :
-                                      "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                                    </>
+                                        {notification.admin.name}{' '}
+                                        {notification.action === "add" ? "added you to" :
+                                        notification.action === "role" ? "added you as an admin in" :
+                                        notification.action === "assign" ? "assigned a task to you" :
+                                        notification.action === "update" ? "updated" :
+                                        "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                                      </>
                                     )
                                   }
                                   {notification.group && (
                                       <>
-                                      {notification.admin.name} assigned you to the group {' '}
-                                      <span style={{ color: 'blue' }}>{notification.group.name}</span>
-                                    </>
+                                        {notification.admin.name}{' '}
+                                        {notification.action === "add" ? "added you to" :
+                                        notification.action === "role" ? "added you as an admin in" :
+                                        notification.action === "assign" ? "assigned a task to you" :
+                                        notification.action === "update" ? "updated" :
+                                        "deleted"} the group {' '} <span style={{ color: 'blue' }}>{notification.group.name}</span>
+                                      </>
                                   )}
                               </div>
                               </div>
