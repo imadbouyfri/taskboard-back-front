@@ -102,39 +102,44 @@ const Group = () => {
         return <Spinner/>
     }
 
+    const createdAt = new Date(group.createdAt); // Replace this with the actual createdAt date
+
+    const month = createdAt.toLocaleString('default', { month: 'long' });
+    const day = createdAt.getDate();
+    const year = createdAt.getFullYear();
+
     return (
         <>
-            <Paper>
-            <Card sx={{ maxWidth: 345 }}>
-                <CardHeader
-                    avatar={
-                        <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF' }}>
-                            <GroupsIcon />
-                        </Avatar>
-                    }
-                    action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                    }
-                    title={group.name}
-                    subheader="September 14, 2016"
-                />
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image="/static/images/cards/paella.jpg"
-                    alt="Paella dish"
-                />
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
-                    </Typography>
-                </CardContent>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '80px'}}>
+                <Card sx={{ maxWidth: 900}}>
+                    <CardHeader
+                        avatar={
+                            <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF', width: '48px', height: '48px',}}>
+                                <GroupsIcon />
+                            </Avatar>
+                        }
+                        action={
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon />
+                        </IconButton>
+                        }
+                        title={
+                            <Typography variant="subtitle2" style={{fontSize: '20px'}}>
+                                {group.name}
+                            </Typography>
+                        }
+                        subheader={`Created at: ${month} ${day}, ${year}`}
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="text.secondary">
+                            Invite members to this group by clicking on the button below.
+                        </Typography>
+                        <div>
+                            <img src="/images/icons8-double-down.gif" alt="My Image" style={{maxWidth: '48px', maxHeight: '48px'}}/>
+                        </div>
+                    </CardContent>
                 </Card>
-            </Paper>
+            </div>
             <Popup
                 openPopup={openMemPopup}
                 setOpenPopup={setOpenMemPopup}
