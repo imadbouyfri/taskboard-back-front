@@ -43,14 +43,14 @@ const Group = () => {
         }
     };
     
-      // get Members
-      const getAllMembers = async () => {
+    // get Members
+    const getAllMembers = async () => {
         if (!user) return;
         const token = user.token;
         const config = {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         }
         try {
             // get invited members
@@ -61,10 +61,10 @@ const Group = () => {
             ))
             setInvitedMembers(allInvitedMember);
             //   console.log(invitedMembers);
-          // get All members
+            // get All members
             const response1 = await axios.get("http://localhost:3001/member", config);
             const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
-          // checking for duplicated values
+            // checking for duplicated values
             for (let i = 0; i < allInvitedMember.length; i++) {
                 const index = Member.findIndex((mem) => {
                     return mem._id === allInvitedMember[i]._id;
@@ -163,21 +163,12 @@ const Group = () => {
         }
     };
 
-    const letters = group.name.split(' ');
-    const avatar = letters[0].slice(0, 1).toUpperCase() + letters[1].slice(0, 1).toUpperCase();
-
-
     return (
         <>
             <Paper>
             <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
-                        <div>{group.name}</div>
-                        <div style={{ backgroundColor: avatarColors[group.color], color: '#FFFFFF' }} className="profile-avatar">
-          {avatar}
-        </div>
-                      </div>
-            <div style={BoardStyle.topBar}>
-          <div style={BoardStyle.leftSide}>
+                <div>{group.name}</div>
+            </div>
             <div style={BoardStyle.members}>
               <p style={BoardStyle.separator}>{group.name}</p>
               <div className='membersAvatars' style={BoardStyle.membersAvatars}>
@@ -191,9 +182,6 @@ const Group = () => {
                 <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
               </Button>
             </div>
-          </div>
-          </div>
-
             </Paper>
             <Popup
                 openPopup={openMemPopup}
