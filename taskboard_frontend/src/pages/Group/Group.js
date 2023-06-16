@@ -14,12 +14,10 @@ import Popup from "../Board/Popup";
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import UserAvatar from "../../components/avatar/UserAvatar";
 
 const Group = () => {
     const [group, setGroup] = useState([]);
@@ -30,6 +28,73 @@ const Group = () => {
     const [recordUpdate, setRecordUpdate] = useState("");
     const { user } = useSelector((state) => state.auth);
     const { id } = useParams();
+
+    const BoardStyle = {
+        paddingTop: 15,
+        backgroundColor: "#FFFFFF",
+        minHeight: "86vh",
+        display: "flex",
+        alignItems: "flex-start",
+        topBar: {
+          marginRight: '20px',
+          marginLeft: '20px',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingTop: 7
+        },
+        leftSide: {
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'start',
+          paddingTop: 7
+        },
+        title: {
+          fontWeight: 'bold',
+          fontSize: "1.3rem",
+          color: "#495151",
+        },
+        members: {
+          marginLeft: 20,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+        },
+        separator: {
+          height: 18, borderRight: '1px solid #a6a6a6', marginRight: 7
+        },
+        membersAvatars: {
+          display: 'flex',
+          flexDirection: 'row'
+        },
+        historyButton: {
+          transition: 'background-color 100ms',
+          color: "#FFF",
+          backgroundColor: '#1976D2',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '6px',
+          paddingLeft: '8px',
+          paddingRight: '8px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          '&:hover': {
+            color: "#000"
+          }
+        },
+        rightSide: {
+          width: '28%',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }
+      };
     
     // getting group data from DB
     const getSingleGroup = async () => {
@@ -114,14 +179,9 @@ const Group = () => {
                 <Card sx={{ maxWidth: 900}}>
                     <CardHeader
                         avatar={
-                            <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF', width: '48px', height: '48px',}}>
+                            <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF', width: '50px', height: '50px'}}>
                                 <GroupsIcon />
                             </Avatar>
-                        }
-                        action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
                         }
                         title={
                             <Typography variant="subtitle2" style={{fontSize: '20px'}}>
@@ -131,12 +191,26 @@ const Group = () => {
                         subheader={`Created at: ${month} ${day}, ${year}`}
                     />
                     <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            Invite members to this group by clicking on the button below.
+                        <Typography variant="body1" style={{textAlign: "center", fontSize: '19px', margin: '15px'}}>
+                            Invite members to this group by clicking on the button below, 
+                            and you can also change the roles of the invited members
                         </Typography>
-                        <div>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
                             <img src="/images/icons8-double-down.gif" alt="My Image" style={{maxWidth: '48px', maxHeight: '48px'}}/>
                         </div>
+                        <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                            <div className='membersAvatars' style={BoardStyle.membersAvatars}>
+                                {invitedMembers.map((member) => (
+                                <UserAvatar key={member.name} name={member.name} color={member.color}/>
+                                ))}
+                            </div>
+                            {/*Share*/}
+                            <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
+                                    onClick={() => setOpenMemPopup(true)}>
+                                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
+                            </Button>
+                        </div>
+                        
                     </CardContent>
                 </Card>
             </div>
