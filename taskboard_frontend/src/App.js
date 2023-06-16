@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import AdminSidebar from "./components/Sidebar/AdminSidebar";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'typeface-poppins';
 
 const styles = {
   sideBarOn: {
@@ -26,7 +27,7 @@ function App() {
   
   return (
     <>
-      <div>
+      <div style={{ fontFamily: 'Poppins, sans-serif' }}>
         {user ? (
           <>
             <Header/>

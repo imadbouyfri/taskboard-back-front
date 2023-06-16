@@ -175,11 +175,17 @@ const Group = () => {
 
     return (
         <>
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '80px'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginTop: '80px', marginLeft: '20px'}}>
+                <img src="/images/icons8-users-24.png" alt="My Image" style={{maxWidth: '32px', maxHeight: '32px'}}/>   
+                <Typography variant="h5" style={{fontWeight: 'bold'}}>
+                    Invite Members
+                </Typography>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '45px'}}>
                 <Card sx={{ maxWidth: 900}}>
                     <CardHeader
                         avatar={
-                            <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF', width: '50px', height: '50px'}}>
+                            <Avatar style={{ backgroundColor: avatarColors[group.color], color: '#FFFFFF', width: '50px', height: '50px'}}>
                                 <GroupsIcon />
                             </Avatar>
                         }
@@ -198,16 +204,16 @@ const Group = () => {
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                             <img src="/images/icons8-double-down.gif" alt="My Image" style={{maxWidth: '48px', maxHeight: '48px'}}/>
                         </div>
-                        <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px'}}>
                             <div className='membersAvatars' style={BoardStyle.membersAvatars}>
                                 {invitedMembers.map((member) => (
                                 <UserAvatar key={member.name} name={member.name} color={member.color}/>
                                 ))}
                             </div>
                             {/*Share*/}
-                            <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
+                            <Button variant='contained' sx={{ marginLeft: 1, fontSize: '0.8rem' }} style={{padding: '1rem'}}
                                     onClick={() => setOpenMemPopup(true)}>
-                                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
+                                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Invite Members
                             </Button>
                         </div>
                         
