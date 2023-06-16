@@ -36,65 +36,41 @@ const Group = () => {
         display: "flex",
         alignItems: "flex-start",
         topBar: {
-          marginRight: '20px',
-          marginLeft: '20px',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingTop: 7
+            marginRight: '20px',
+            marginLeft: '20px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingTop: 7
         },
         leftSide: {
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'start',
-          paddingTop: 7
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'start',
+            paddingTop: 7
         },
         title: {
-          fontWeight: 'bold',
-          fontSize: "1.3rem",
-          color: "#495151",
+            fontWeight: 'bold',
+            fontSize: "1.3rem",
+            color: "#495151",
         },
         members: {
-          marginLeft: 20,
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center'
+            marginLeft: 20,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
         },
         separator: {
-          height: 18, borderRight: '1px solid #a6a6a6', marginRight: 7
+            height: 18, borderRight: '1px solid #a6a6a6', marginRight: 7
         },
         membersAvatars: {
-          display: 'flex',
-          flexDirection: 'row'
+            display: 'flex',
+            flexDirection: 'row'
         },
-        historyButton: {
-          transition: 'background-color 100ms',
-          color: "#FFF",
-          backgroundColor: '#1976D2',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '6px',
-          paddingLeft: '8px',
-          paddingRight: '8px',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          '&:hover': {
-            color: "#000"
-          }
-        },
-        rightSide: {
-          width: '28%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }
-      };
+    };
     
     // getting group data from DB
     const getSingleGroup = async () => {
@@ -177,7 +153,7 @@ const Group = () => {
         <>
             <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginTop: '80px', marginLeft: '20px'}}>
                 <img src="/images/icons8-users-24.png" alt="My Image" style={{maxWidth: '32px', maxHeight: '32px'}}/>   
-                <Typography variant="h5" style={{fontWeight: 'bold'}}>
+                <Typography variant="h5" style={{fontWeight: 'bold', color: '#274c77'}}>
                     Invite Members
                 </Typography>
             </div>

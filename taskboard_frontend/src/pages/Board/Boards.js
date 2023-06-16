@@ -22,8 +22,10 @@ import Typography from '@mui/material/Typography';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Swal from 'sweetalert2';
-import UserAvatar from "../../components/avatar/UserAvatar";
+import { avatarColors } from '../../data/avatarColors';
+import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
 const Boards = () => {
   const [recordUpdate, setRecordUpdate] = useState("");
@@ -323,7 +325,9 @@ const deleteGroups = async (id) => {
                   >
                     <TableCell component="th" scope="row">
                       <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
-                        <div><UserAvatar key={group.name} name={group.name} color={group.color}/></div>
+                          <Avatar style={{ backgroundColor: avatarColors[group.color], color: '#FFFFFF'}}>
+                              <GroupsIcon />
+                          </Avatar>
                         <div>{group.name}</div>
                       </div>
                     </TableCell>
