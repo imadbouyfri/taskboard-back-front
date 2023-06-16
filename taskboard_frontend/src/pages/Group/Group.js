@@ -7,10 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import InviteMember from '../../components/Member/InviteMember';
-import UserAvatar from "../../components/avatar/UserAvatar";
 import './group.css';
 import { avatarColors } from '../../data/avatarColors';
+import GroupsIcon from '@mui/icons-material/Groups';
 import Popup from "../Board/Popup";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const Group = () => {
     const [group, setGroup] = useState([]);
@@ -19,11 +28,8 @@ const Group = () => {
     const [invitedMembers, setInvitedMembers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [recordUpdate, setRecordUpdate] = useState("");
-    const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
     const { id } = useParams();
-
-    
     
     // getting group data from DB
     const getSingleGroup = async () => {
@@ -96,92 +102,38 @@ const Group = () => {
         return <Spinner/>
     }
 
-    const BoardStyle = {
-        paddingTop: 15,
-        backgroundColor: "#FFFFFF",
-        minHeight: "86vh",
-        display: "flex",
-        alignItems: "flex-start",
-        topBar: {
-        marginRight: '20px',
-        marginLeft: '20px',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingTop: 7
-        },
-        leftSide: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'start',
-            paddingTop: 7
-        },
-        title: {
-            fontWeight: 'bold',
-            fontSize: "1.3rem",
-            color: "#495151",
-        },
-        members: {
-            marginLeft: 20,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-        separator: {
-            height: 18, borderRight: '1px solid #a6a6a6', marginRight: 7
-        },
-        membersAvatars: {
-            display: 'flex',
-            flexDirection: 'row'
-        },
-        historyButton: {
-            transition: 'background-color 100ms',
-            color: "#FFF",
-            backgroundColor: '#1976D2',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '6px',
-            paddingLeft: '8px',
-            paddingRight: '8px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            '&:hover': {
-                color: "#000"
-            }
-        },
-        rightSide: {
-            width: '28%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        }
-    };
-
     return (
         <>
             <Paper>
-            <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
-                <div>{group.name}</div>
-            </div>
-            <div style={BoardStyle.members}>
-              <p style={BoardStyle.separator}>{group.name}</p>
-              <div className='membersAvatars' style={BoardStyle.membersAvatars}>
-                {invitedMembers.map((member) => (
-                  <UserAvatar key={member.name} name={member.name} color={member.color}/>
-                ))}
-              </div>
-              {/*Share*/}
-              <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
-                      onClick={() => setOpenMemPopup(true)}>
-                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
-              </Button>
-            </div>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardHeader
+                    avatar={
+                        <Avatar style={{ backgroundColor: avatarColors[user.color], color: '#FFFFFF' }}>
+                            <GroupsIcon />
+                        </Avatar>
+                    }
+                    action={
+                    <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                    </IconButton>
+                    }
+                    title={group.name}
+                    subheader="September 14, 2016"
+                />
+                <CardMedia
+                    component="img"
+                    height="194"
+                    image="/static/images/cards/paella.jpg"
+                    alt="Paella dish"
+                />
+                <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                    This impressive paella is a perfect party dish and a fun meal to cook
+                    together with your guests. Add 1 cup of frozen peas along with the mussels,
+                    if you like.
+                    </Typography>
+                </CardContent>
+                </Card>
             </Paper>
             <Popup
                 openPopup={openMemPopup}
