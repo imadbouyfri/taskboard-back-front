@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
-  const [state, setState] = useState(recordUpdate);
+  const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", descData: "" });
   const { name, descData } = state;
   const { user } = useSelector((state) => state.auth);
   
@@ -105,11 +105,10 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
     e.preventDefault();
     if (!state._id) {
       addBoard(state);
-      setOpenPopup(!openPopup);
     } else {
       updateBoard(state);
-      setOpenPopup(!openPopup);
     }
+    setOpenPopup(false);
   };
   
   const handleInputChange = (e) => {

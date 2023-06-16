@@ -28,11 +28,12 @@ import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
 const Boards = () => {
+  const [recordBoardUpdate, setRecordBoardUpdate] = useState("");
   const [recordUpdate, setRecordUpdate] = useState("");
   const [boards, setBoards] = useState([]);
   const [groups, setGroups] = useState([]);
   const [searched, setSearched] = useState("");
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openBoardPopup, setOpenBoardPopup] = useState(false);
   const [openStatsPopup, setOpenStatsPopup] = useState(false);
   const [openGroupForm, setOpenGroupForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +91,7 @@ const Boards = () => {
     GetGroups();
     setIsLoading(false);
     console.log('board');
-  }, [openPopup]);
+  }, [openBoardPopup]);
   
   //delete Board
   const deleteBoards = async (id) => {
@@ -228,9 +229,14 @@ const deleteGroups = async (id) => {
   };
   //----------------------------------------------------------------Styling
   
-  const openInPopup = (item) => {
-    setRecordUpdate(item);
-    setOpenPopup(!openPopup);
+  const openInPopup = () => {
+    setRecordBoardUpdate();
+    setOpenBoardPopup(!openBoardPopup);
+  };
+
+  const openUpdatePopup = (item) => {
+    setRecordBoardUpdate(item);
+    setOpenBoardPopup(!openBoardPopup);
   };
 
   const openEditPopup = (item) => {
@@ -277,7 +283,7 @@ const deleteGroups = async (id) => {
               style={styles.buttons.addBoard}
               variant="contained"
               children="New Boards"
-              onClick={() => setOpenPopup(true)}
+              onClick={() => openInPopup()}
               startIcon={<AddIcon />}
             />
           </div>
@@ -425,7 +431,7 @@ const deleteGroups = async (id) => {
                         variant="outlined"
                         color="warning"
                         sx={{ marginLeft: 2 }}
-                        onClick={() => openInPopup(board)}
+                        onClick={() => openUpdatePopup(board)}
                       >
                         <ModeEditOutlineIcon/>
                       </Button>
@@ -455,16 +461,16 @@ const deleteGroups = async (id) => {
         </TableContainer>
       </Paper>
       <Popup
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
-        setRecordUpdate={setRecordUpdate}
-        recordUpdate={recordUpdate}
-        title={recordUpdate ? "Update Board" : "New board"}
+        openPopup={openBoardPopup}
+        setOpenPopup={setOpenBoardPopup}
+        setRecordUpdate={setRecordBoardUpdate}
+        recordUpdate={recordBoardUpdate}
+        title={recordBoardUpdate ? "Update Board" : "New board"}
       >
         <BoardForm
-          openPopup={openPopup}
-          setOpenPopup={setOpenPopup}
-          recordUpdate={recordUpdate}
+          openPopup={openBoardPopup}
+          setOpenPopup={setOpenBoardPopup}
+          recordUpdate={recordBoardUpdate}
         />
       </Popup>
       <Popup
