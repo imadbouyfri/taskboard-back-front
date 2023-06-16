@@ -3,18 +3,27 @@ const Member = require("../models/member");
 const Permission = require("../models/permission");
 
 exports.allGroups = async (req, res) => {
-    try {
-        const groups = await Group.find({ creator: req.member.id }).populate({
-            path: 'members',
-            model: 'Member',
-            select: 'name',
-        });
-        res.json(groups);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Failed to retrieve groups." });
-    }
+  try {
+    const permissions = await Permission.find({ user: req.member.id });
+    const permissionGroups = permissions.map((per) => per.group);
+    const allGroups = await Group.find({ _id: { $in: permissionGroups } })
+      .populate({
+        path: 'permissions',
+        select: 'user role',
+        populate: {
+          path: 'user',
+          model: 'Member',
+          select: 'name email',
+        },
+      })
+      .exec();
+    res.json(allGroups);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: 'Server Error' });
+  }
 };
+
 
 exports.createGroup = async (req, res) => {
     try {

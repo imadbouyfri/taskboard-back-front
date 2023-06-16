@@ -151,7 +151,7 @@ const Group = () => {
 
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginTop: '80px', marginLeft: '20px'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '18px', marginTop: '80px', marginLeft: '20px'}}>
                 <img src="/images/icons8-users-24.png" alt="My Image" style={{maxWidth: '32px', maxHeight: '32px'}}/>   
                 <Typography variant="h5" style={{fontWeight: 'bold', color: '#274c77'}}>
                     Invite Members
@@ -189,7 +189,7 @@ const Group = () => {
                             {/*Share*/}
                             <Button variant='contained' sx={{ marginLeft: 1, fontSize: '0.8rem' }} style={{padding: '1rem'}}
                                     onClick={() => setOpenMemPopup(true)}>
-                                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Invite Members
+                                <PersonAddAltIcon sx={{ fontSize: 28, marginRight: 0.5 }}/> Invite Members
                             </Button>
                         </div>
                         
