@@ -6,6 +6,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom'
 import BoardSearch from "../Board/BoardSearch";
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import Popup from "../../pages/Board/Popup";
 import BoardForm from "../Board/BoardForm";
 import { useSelector } from "react-redux";
@@ -56,11 +58,11 @@ function Sidebar({ showSidebar, setShowSideBar }) {
         <ul className='side-menu-items'>
           <Link to='#' className='menu-bars'>
             <div className='direction'>
-              <ChevronLeftIcon className='chevronLeft' onClick={hideSideBar}/>
-              <ChevronRightIcon className={showSidebar ? 'chevronRight' : ''} onClick={hideSideBar}/>
+              <KeyboardDoubleArrowLeftIcon className='chevronLeft' onClick={hideSideBar}/>
+              <KeyboardDoubleArrowRightIcon className={showSidebar ? 'chevronRight' : ''} onClick={hideSideBar}/>
             </div>
-            <BoardSearch searched={searched} setSearched={setSearched}/>
           </Link>
+          {/* <BoardSearch searched={searched} setSearched={setSearched}/> */}
           <div style={{
             marginTop: 40,
             paddingLeft: 20,

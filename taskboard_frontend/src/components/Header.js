@@ -19,7 +19,8 @@ import { Badge, Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FormControlLabel, Switch } from '@mui/material';
 import Divider from '@mui/material/Divider';
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,6 +75,8 @@ const Header = () => {
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
+    paddingLeft: 50,
+    paddingRight: 50,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(3),
@@ -169,22 +172,22 @@ const Header = () => {
                         children='Taskboard'/>
             </div>
           </MenuItem>
-          {user && (
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon/>
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-          
-          )}
           <Box sx={{ flexGrow: 1 }}/>
           
           {/*Bell and profile icons*/}
           <Box sx={{ display: { xs: 'none', md: 'flex', alignItems: 'center', justifyContent: 'center'} }}>
+            {user && (
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon/>
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+            
+            )}
             {user ? (
               <>
                 <Box sx={{ marginRight: 3 }}>
@@ -257,74 +260,73 @@ const Header = () => {
                     </div>
                     <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-  {filteredNotifications && filteredNotifications.length > 0 ? (
-    filteredNotifications.map((notification, index) => {
-      if (
-        (notification.card) ||
-        (notification.board) ||
-        (notification.group)
-      ) {
-        return (
-          <MenuItem key={index}>
-            <Link
-              to={notification.board ? `/taskboard/${notification.board._id}` : '/board'}
-              style={{ textDecoration: 'none', color: 'black'}}
-              onClick={handleMarkAsRead}
-            >
-              <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {notification.admin && (
-                  <UserAvatar name={notification.admin.name} color={notification.admin.color} />
-                )}
-                <div className="notification-message">
-                  {notification.card && (
-                    <>
-                      {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
-                      <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                    </>
-                  )}
-                  {!notification.card && notification.board &&(
-                    <>
-                      {notification.admin.name}{' '}
-                      {notification.action === "add" ? "added you to" :
-                      notification.action === "role" ? "added you as an admin in" :
-                      notification.action === "assign" ? "assigned a task to you" :
-                      notification.action === "update" ? "updated" :
-                      "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                    </>
-                  )}
-                  {notification.group && (
-                    <>
-                      {notification.admin.name}{' '}
-                      {notification.action === "add" ? "added you to" :
-                      notification.action === "role" ? "added you as an admin in" :
-                      notification.action === "assign" ? "assigned a task to you" :
-                      notification.action === "update" ? "updated" :
-                      "deleted"} the group {' '} <span style={{ color: 'blue' }}>{notification.group.name}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </Link>
-          </MenuItem>
-        );
-      } else {
-        return null;
-      }
-    })
-  ) : (
-    <MenuItem>
-      All the notifications have been read.
-    </MenuItem>
-  )}
-  {filteredNotifications && !showReadNotifications && filteredNotifications.length > 0 && (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
-      <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
-        Mark as read
-      </Button>
-    </div>
-  )}
-</div>
-
+                        {filteredNotifications && filteredNotifications.length > 0 ? (
+                          filteredNotifications.map((notification, index) => {
+                            if (
+                              (notification.card) ||
+                              (notification.board) ||
+                              (notification.group)
+                            ) {
+                              return (
+                                <MenuItem key={index}>
+                                  <Link
+                                    to={notification.board ? `/taskboard/${notification.board._id}` : '/board'}
+                                    style={{ textDecoration: 'none', color: 'black'}}
+                                    onClick={handleMarkAsRead}
+                                  >
+                                    <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                      {notification.admin && (
+                                        <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+                                      )}
+                                      <div className="notification-message">
+                                        {notification.card && (
+                                          <>
+                                            {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
+                                            <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                                          </>
+                                        )}
+                                        {!notification.card && notification.board &&(
+                                          <>
+                                            {notification.admin.name}{' '}
+                                            {notification.action === "add" ? "added you to" :
+                                            notification.action === "role" ? "added you as an admin in" :
+                                            notification.action === "assign" ? "assigned a task to you" :
+                                            notification.action === "update" ? "updated" :
+                                            "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                                          </>
+                                        )}
+                                        {notification.group && (
+                                          <>
+                                            {notification.admin.name}{' '}
+                                            {notification.action === "add" ? "added you to" :
+                                            notification.action === "role" ? "added you as an admin in" :
+                                            notification.action === "assign" ? "assigned a task to you" :
+                                            notification.action === "update" ? "updated" :
+                                            "deleted"} the group {' '} <span style={{ color: 'blue' }}>{notification.group.name}</span>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </MenuItem>
+                              );
+                            } else {
+                              return null;
+                            }
+                          })
+                        ) : (
+                          <MenuItem>
+                            All the notifications have been read.
+                          </MenuItem>
+                        )}
+                        {filteredNotifications && !showReadNotifications && filteredNotifications.length > 0 && (
+                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
+                            <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
+                              Mark as read
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                   </Menu>
                 </Box>
                 <Box>
@@ -334,24 +336,53 @@ const Header = () => {
                     </div>
                   </Tooltip>
                   <Menu
-                    sx={{ mt: '20px' }}
-                    id="menu-appbar"
+                    id="basic-menu"
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        minWidth: '200px',
+                        mt: 0,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&:before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
+                    onClick={handleCloseUserMenu}
                   >
-                    <MenuItem onClick={() => navigate(`/profile/${user._id}`)}>Profile</MenuItem>
+                    <MenuItem onClick={() => navigate(`/profile/${user._id}`)}>
+                      <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+                        <PersonOutlineIcon/>
+                        <Typography textAlign="center">Profile</Typography>
+                      </div>
+                    </MenuItem>
+                    <Divider variant="middle" />
                     <MenuItem key="menus" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center" onClick={onLogout}>Logout</Typography>
+                      <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                        <LogoutIcon/>
+                        <Typography textAlign="center" onClick={onLogout}>Logout</Typography>
+                      </div>
                     </MenuItem>
                   </Menu>
                 </Box>

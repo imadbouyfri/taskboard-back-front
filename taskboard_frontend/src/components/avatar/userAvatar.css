@@ -1,9 +1,10 @@
 .avatar {
     color: #FFF;
-    background-color: #FF5B3C;
+    background-color: #FFF;
     border-radius: 50%;
     height: 30px;
     width: 30px;
+    padding: 19px;
     font-size: 0.8rem;
     margin-right: 3px;
     display: flex;
