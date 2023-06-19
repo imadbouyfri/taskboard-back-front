@@ -59,8 +59,8 @@ const Header = () => {
   console.log(notifications);
 
   const styles = {
-    backgroundColor: '#FFFFFF',
-    color: '#4d56bf',
+    backgroundColor: '#282c34',
+    color: '#FFF',
     top: 0,
     position: 'fixed',
     zIndex: 100,
@@ -161,10 +161,13 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={styles}>
-        <Toolbar variant='dense'>
-          <MenuItem key='Home' style={{ marginLeft: 20 }} onClick={() => navigate("/board")}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: 25 }} color="inherit" component="div"
+        <Toolbar variant='dense' style={{paddingLeft: '0px', paddingTop: '5px', paddingBottom: '5px'}}>
+          <MenuItem key='Home' onClick={() => navigate("/board")}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                <img src="/images/icons8-dashboard-layout-48.png" alt="My Image" style={{maxWidth: '32px', maxHeight: '32px'}}/>   
+                <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: 25 }} color="inherit" component="div"
                         children='Taskboard'/>
+            </div>
           </MenuItem>
           {user && (
             <Search>
@@ -192,6 +195,7 @@ const Header = () => {
                           aria-controls={open ? 'basic-menu' : undefined}
                           aria-haspopup="true"
                           aria-expanded={open ? 'true' : undefined}
+                          style={{color: '#FFF'}}
                         >
                           <Badge color="error" badgeContent={!showReadNotifications && filteredNotifications ?  filteredNotifications.length : 0} max={50}>
                             <NotificationsIcon />
@@ -272,13 +276,13 @@ const Header = () => {
                   <UserAvatar name={notification.admin.name} color={notification.admin.color} />
                 )}
                 <div className="notification-message">
-                  {notification.card && !notification.card.isDeleted && (
+                  {notification.card && (
                     <>
                       {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
                       <span style={{ color: 'blue' }}>{notification.board.name}</span>
                     </>
                   )}
-                  {!notification.card && notification.board && !notification.board.isDeleted && (
+                  {!notification.card && notification.board &&(
                     <>
                       {notification.admin.name}{' '}
                       {notification.action === "add" ? "added you to" :
@@ -288,7 +292,7 @@ const Header = () => {
                       "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
                     </>
                   )}
-                  {notification.group && !notification.group.isDeleted && (
+                  {notification.group && (
                     <>
                       {notification.admin.name}{' '}
                       {notification.action === "add" ? "added you to" :

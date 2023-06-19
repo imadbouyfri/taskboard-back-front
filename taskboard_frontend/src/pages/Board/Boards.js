@@ -292,14 +292,14 @@ const deleteGroups = async (id) => {
           <div style={{display: 'flex', gap: '15px', marginBottom: '25px'}}>
             <PeopleAltIcon fontSize="large" />
             <Typography variant="h5" gutterBottom>
-              GROUPS
+              MY TEAMS
             </Typography>
           </div>
           <div>
             <Button
               style={styles.buttons.addGroup}
               variant="contained"
-              children="Add Group"
+              children="Add Team"
               onClick={() => openGroupPopup()}
               startIcon={<AddIcon />}
             />
@@ -309,14 +309,14 @@ const deleteGroups = async (id) => {
           <Table sx={styles.tableStyle} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <TableCell>Groups Name</TableCell>
-                <TableCell align="center">Groups Description</TableCell>
+                <TableCell>Teams Name</TableCell>
+                <TableCell align="center">Teams Description</TableCell>
                 <TableCell align="center">Add Members</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {groups.length <= 0 ? (<><TableRow><TableCell>No groups available</TableCell></TableRow></>) : groups
+              {groups.length <= 0 ? (<><TableRow><TableCell>No teams available</TableCell></TableRow></>) : groups
                 .filter(
                   (group) =>
                     group.name.toLowerCase().includes(searched.toLowerCase()) ||
@@ -383,7 +383,7 @@ const deleteGroups = async (id) => {
         <div style={{display: 'flex', gap: '15px', marginBottom: '25px', color: '#274c77'}}>
           <DashboardIcon fontSize="large" />
           <Typography variant="h5" gutterBottom>
-            BOARDS
+            MY BOARDS
           </Typography>
         </div>
         <TableContainer component={Paper}>
