@@ -253,64 +253,74 @@ const Header = () => {
                     </div>
                     <Divider variant="middle" style={{marginBottom: '10px'}} />
                     <div className="notification-container" style={{ maxHeight: '400px', overflow: 'auto' }}>
-                      {filteredNotifications && filteredNotifications.length > 0 ? (
-                        filteredNotifications.map((notification, index) => (
-                          <MenuItem key={index}>
-                            <Link
-                              to={notification.board ? `/taskboard/${notification.board._id}` : '/board'}
-                              style={{ textDecoration: 'none', color: 'black'}}
-                              onClick={handleMarkAsRead}
-                            >
-                              <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                {notification.admin && (
-                                  <UserAvatar name={notification.admin.name} color={notification.admin.color} />
-                                )}
-                                <div className="notification-message">
-                                  {notification.card && (
-                                      <>
-                                      {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
-                                      <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                                    </>
-                                  )}
-                                  {!notification.card && notification.board && (
-                                      <>
-                                        {notification.admin.name}{' '}
-                                        {notification.action === "add" ? "added you to" :
-                                        notification.action === "role" ? "added you as an admin in" :
-                                        notification.action === "assign" ? "assigned a task to you" :
-                                        notification.action === "update" ? "updated" :
-                                        "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
-                                      </>
-                                    )
-                                  }
-                                  {notification.group && (
-                                      <>
-                                        {notification.admin.name}{' '}
-                                        {notification.action === "add" ? "added you to" :
-                                        notification.action === "role" ? "added you as an admin in" :
-                                        notification.action === "assign" ? "assigned a task to you" :
-                                        notification.action === "update" ? "updated" :
-                                        "deleted"} the group {' '} <span style={{ color: 'blue' }}>{notification.group.name}</span>
-                                      </>
-                                  )}
-                              </div>
-                              </div>
-                            </Link>
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem>
-                              All the notifications have been read.
-                        </MenuItem>
-                      )}
-                      {filteredNotifications && !showReadNotifications && filteredNotifications.length > 0 && (
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
-                          <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
-                            Mark as read
-                          </Button>
-                        </div>
-                      )}
-                    </div>
+  {filteredNotifications && filteredNotifications.length > 0 ? (
+    filteredNotifications.map((notification, index) => {
+      if (
+        (notification.card) ||
+        (notification.board) ||
+        (notification.group)
+      ) {
+        return (
+          <MenuItem key={index}>
+            <Link
+              to={notification.board ? `/taskboard/${notification.board._id}` : '/board'}
+              style={{ textDecoration: 'none', color: 'black'}}
+              onClick={handleMarkAsRead}
+            >
+              <div className="notification-item" style={{ margin: '3px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {notification.admin && (
+                  <UserAvatar name={notification.admin.name} color={notification.admin.color} />
+                )}
+                <div className="notification-message">
+                  {notification.card && !notification.card.isDeleted && (
+                    <>
+                      {notification.admin.name} assigned you to the card <span style={{ color: 'blue' }}><span style={{ color: 'blue' }}>{notification.card.name}</span></span> {' '}in the board{' '}
+                      <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                    </>
+                  )}
+                  {!notification.card && notification.board && !notification.board.isDeleted && (
+                    <>
+                      {notification.admin.name}{' '}
+                      {notification.action === "add" ? "added you to" :
+                      notification.action === "role" ? "added you as an admin in" :
+                      notification.action === "assign" ? "assigned a task to you" :
+                      notification.action === "update" ? "updated" :
+                      "deleted"} the board {' '} <span style={{ color: 'blue' }}>{notification.board.name}</span>
+                    </>
+                  )}
+                  {notification.group && !notification.group.isDeleted && (
+                    <>
+                      {notification.admin.name}{' '}
+                      {notification.action === "add" ? "added you to" :
+                      notification.action === "role" ? "added you as an admin in" :
+                      notification.action === "assign" ? "assigned a task to you" :
+                      notification.action === "update" ? "updated" :
+                      "deleted"} the group {' '} <span style={{ color: 'blue' }}>{notification.group.name}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </Link>
+          </MenuItem>
+        );
+      } else {
+        return null;
+      }
+    })
+  ) : (
+    <MenuItem>
+      All the notifications have been read.
+    </MenuItem>
+  )}
+  {filteredNotifications && !showReadNotifications && filteredNotifications.length > 0 && (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px', width: '100%' }}>
+      <Button variant="contained" style={{ width: '95%' }} onClick={handleMarkAsRead}>
+        Mark as read
+      </Button>
+    </div>
+  )}
+</div>
+
                   </Menu>
                 </Box>
                 <Box>
