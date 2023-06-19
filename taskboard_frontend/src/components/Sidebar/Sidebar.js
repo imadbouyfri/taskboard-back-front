@@ -56,15 +56,13 @@ function Sidebar({ showSidebar, setShowSideBar }) {
     <>
       <nav className={showSidebar ? 'sidebar active' : 'sidebar'}>
         <ul className='side-menu-items'>
-          <Link to='#' className='menu-bars'>
             <div className='direction'>
-              <KeyboardDoubleArrowLeftIcon className='chevronLeft' onClick={hideSideBar}/>
-              <KeyboardDoubleArrowRightIcon className={showSidebar ? 'chevronRight' : ''} onClick={hideSideBar}/>
+              <KeyboardDoubleArrowLeftIcon className='chevronLeft chevron' onClick={hideSideBar}/>
+              <KeyboardDoubleArrowRightIcon className={showSidebar ? 'chevronRight chevron' : ''} onClick={hideSideBar}/>
             </div>
-          </Link>
           {/* <BoardSearch searched={searched} setSearched={setSearched}/> */}
           <div style={{
-            marginTop: 40,
+            marginTop: 10,
             paddingLeft: 20,
             paddingRight: 15,
             display: 'flex',

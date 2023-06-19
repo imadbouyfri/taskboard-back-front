@@ -5,8 +5,9 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import SortIcon from '@mui/icons-material/Sort';
 import CardSearch from "../../components/Card/CardSearch";
+import './popper.css';
 
 export default function PositionedPopper({searched, setSearched, invitedMembers, filteredCards, boardLists}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,7 +45,7 @@ export default function PositionedPopper({searched, setSearched, invitedMembers,
       <Grid container justifyContent="center">
         <Grid item>
           {/*filter button*/}
-          <Button onClick={handleClick('bottom')}>{filterNumbers === 0 ? null : filterNumbers}<FilterListIcon />Filter</Button>
+          <Button onClick={handleClick('bottom')} className='filterButton'>{filterNumbers === 0 ? null : filterNumbers}<SortIcon style={{marginRight: '8px'}} />Filter</Button>
         </Grid>
       </Grid>
     </Box>

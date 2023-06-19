@@ -126,9 +126,9 @@ const Board = () => {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '6px',
-      paddingLeft: '8px',
-      paddingRight: '8px',
-      borderRadius: '5px',
+      paddingLeft: '9px',
+      paddingRight: '9px',
+      borderRadius: '8px',
       cursor: 'pointer',
       '&:hover': {
         color: "#000"
@@ -340,7 +340,7 @@ const Board = () => {
             {/*// Show menu button*/}
             <div style={BoardStyle.historyButton} className="historyButton"
                  onClick={() => setShowRightSideBar(!showRightSidebar)}>
-              <MenuOpenIcon sx={{ fontSize: 18 }}/> Show menu
+              <MenuOpenIcon sx={{ fontSize: 18, marginRight: 2 }}/> SHOW MENU
             </div>
           </div>
         </div>
