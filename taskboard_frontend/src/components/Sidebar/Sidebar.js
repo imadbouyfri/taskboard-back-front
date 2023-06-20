@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import BoardSearch from "../Board/BoardSearch";
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
@@ -56,13 +55,17 @@ function Sidebar({ showSidebar, setShowSideBar }) {
     <>
       <nav className={showSidebar ? 'sidebar active' : 'sidebar'}>
         <ul className='side-menu-items'>
-            <div className='direction'>
-              <KeyboardDoubleArrowLeftIcon className='chevronLeft chevron' onClick={hideSideBar}/>
-              <KeyboardDoubleArrowRightIcon className={showSidebar ? 'chevronRight chevron' : ''} onClick={hideSideBar}/>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '25px', marginLeft: '15px'}}>
+              {/* <BoardSearch searched={searched} setSearched={setSearched}/> */}
+              <Typography textAlign="center" variant="h5">MENU</Typography>
+              <div className='direction' style={{cursor: 'pointer'}}>
+                <KeyboardDoubleArrowLeftIcon className='chevronLeft chevron' onClick={hideSideBar} />
+                <KeyboardDoubleArrowRightIcon className={showSidebar ? 'chevronRight chevron' : 'chevron'} onClick={hideSideBar}/>
+              </div>
+              
             </div>
-          {/* <BoardSearch searched={searched} setSearched={setSearched}/> */}
           <div style={{
-            marginTop: 10,
+            marginTop: 25,
             paddingLeft: 20,
             paddingRight: 15,
             display: 'flex',
