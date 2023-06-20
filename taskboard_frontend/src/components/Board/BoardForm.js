@@ -127,7 +127,7 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
             <Grid item>
               <TextField
                 variant="outlined"
-                label="Boards Name"
+                label="Boardsss Name"
                 name="name"
                 value={name}
                 onChange={handleInputChange}

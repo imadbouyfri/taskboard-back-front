@@ -314,13 +314,23 @@ const Board = () => {
   }
   
   return (
-    <div style={{height: '93vh', overflowY: 'auto', overflowX: 'auto'}}>
+    <div style={{height: '93vh', overflowY: 'auto', overflowX: 'auto', marginTop: '70px'}}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <div style={BoardStyle.topBar}>
           <div style={BoardStyle.leftSide}>
             <p style={BoardStyle.title}>{boardTitle}</p>
             <div style={BoardStyle.members}>
               <p style={BoardStyle.separator}></p>
+              <div className='membersAvatars' style={BoardStyle.membersAvatars}>
+                {invitedMembers.map((member) => (
+                  <UserAvatar key={member.name} name={member.name} color={member.color}/>
+                ))}
+              </div>
+              {/*Share*/}
+              <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
+                      onClick={() => setOpenPopup(true)}>
+                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
+              </Button>
               <div className='membersAvatars' style={BoardStyle.membersAvatars}>
                 {invitedMembers.map((member) => (
                   <UserAvatar key={member.name} name={member.name} color={member.color}/>
