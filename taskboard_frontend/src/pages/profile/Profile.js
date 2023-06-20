@@ -20,6 +20,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       await axios.patch(`http://localhost:3001/member/${user._id}`, currentUser);
+      console.log(currentUser);
       dispatch(reset());
       dispatch(logout());
       navigate('/');

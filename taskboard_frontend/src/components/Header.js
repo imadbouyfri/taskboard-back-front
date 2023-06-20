@@ -374,7 +374,7 @@ const Header = () => {
                     <MenuItem onClick={() => navigate(`/profile/${user._id}`)}>
                       <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
                         <PersonOutlineIcon/>
-                        <Typography textAlign="center">Profile</Typography>
+                        <Typography textAlign="center">Edit Profile</Typography>
                       </div>
                     </MenuItem>
                     <Divider variant="middle" />
