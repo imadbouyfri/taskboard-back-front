@@ -3,6 +3,7 @@ import { flexbox } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Swal from 'sweetalert2';
 
 function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", descData: "" });
@@ -93,10 +94,11 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup }) {
   axios
     .patch(`http://localhost:3001/board/${state._id}`, { name: data.name, descData: data.descData }, config)
     .then((res) => {
-      // navigate('/');
-      res.json(res);
+      Swal.fire("Success", "Group updated successfully!", "success");
+      console.log(res.data);
     })
     .catch((err) => {
+      Swal.fire("Error", "You don't have admin access!", "error");
       console.log(err);
     });
   };

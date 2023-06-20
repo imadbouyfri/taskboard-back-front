@@ -159,27 +159,46 @@ exports.allBoards = async (req, res) => {
 
 exports.boardDelete = async (req, res) => {
   try {
-    const boardDeleteRes = await Board.findByIdAndDelete(req.params.id);
-    console.log(boardDeleteRes);
-    boardDeleteRes.lists.map(async (list) => {
+    const board = await Board.findById(req.params.id);
+    if (!board) {
+      return res.status(404).json({ error: 'Board not found' });
+    }
+    
+    const permission = await Permission.findOne({ board: req.params.id, user: req.member.id });
+    if (permission.role !== 'admin') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    await board.lists.forEach(async (list) => {
       await List.findByIdAndDelete(list);
       await Card.deleteMany({ list_id: list._id });
     });
-    res.json(`Board ${boardDeleteRes.name} deleted successfully`);
+    
+    await Board.findByIdAndDelete(req.params.id);
+    
+    res.json(`Board ${board.name} deleted successfully`);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: 'Server Error' });
   }
 };
 
 exports.boardUpdate = async (req, res) => {
   try {
+    const permission = await Permission.findOne({ board: req.params.id, user: req.member.id });
+    if (permission.role !== 'admin') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
     console.log('body', req.body);
     await Board.findByIdAndUpdate(req.params.id, req.body);
     res.send("Board updated successfully");
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: 'Server Error' });
   }
 };
+
 
 exports.listsOfBoard = async (req, res) => {
   try {

@@ -124,6 +124,7 @@ const Boards = () => {
             GetBoards();
           }
         } catch (err) {
+          Swal.fire("Error", "You don't have admin access!", "error");
           console.log("error", err);
         }
       }
