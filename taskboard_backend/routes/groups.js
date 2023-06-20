@@ -11,7 +11,7 @@ const { protect } = require('../middleware/authMiddleware');
 router.get("/", protect, allGroups);
 router.get("/:id", groupById);
 router.post("/", protect, createGroup);
-router.delete("/:id", groupDelete);
+router.delete("/:id", protect, groupDelete);
 router.patch("/:id", protect, groupUpdate);
 
 module.exports = router;

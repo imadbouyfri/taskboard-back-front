@@ -82,10 +82,13 @@ exports.createGroup = async (req, res) => {
 
 exports.groupDelete = async (req, res) => {
     try {
-      const group = await Group.findByIdAndDelete(req.params.id);
-      if (!group) {
-        return res.status(404).json({ error: "Group not found" });
+      const permission = await Permission.findOne({ group: req.params.id, user: req.member.id });
+      if (permission.role !== 'admin') {
+        return res.status(401).json({ error: 'Unauthorized' });
       }
+      
+      console.log('body', req.body);
+      const group = await Group.findByIdAndDelete(req.params.id);
       console.log(group);
       res.json({ message: `Group ${group.name} deleted successfully` });
     } catch (err) {

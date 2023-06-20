@@ -165,6 +165,7 @@ const deleteGroups = async (id) => {
           GetGroups();
         }
       } catch (err) {
+        Swal.fire("Error", "You don't have admin access!", "error");
         console.log("error", err);
       }
     }
