@@ -72,6 +72,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
         console.log(res.data);
       })
       .catch((err) => {
+        Swal.fire("Error", "You don't have admin access!", "error");
         console.log(err);
       });
   };

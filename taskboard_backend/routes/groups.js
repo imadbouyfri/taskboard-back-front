@@ -12,6 +12,6 @@ router.get("/", protect, allGroups);
 router.get("/:id", groupById);
 router.post("/", protect, createGroup);
 router.delete("/:id", groupDelete);
-router.patch("/:id", groupUpdate);
+router.patch("/:id", protect, groupUpdate);
 
 module.exports = router;

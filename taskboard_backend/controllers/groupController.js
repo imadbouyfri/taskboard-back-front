@@ -96,10 +96,16 @@ exports.groupDelete = async (req, res) => {
 
   exports.groupUpdate = async (req, res) => {
     try {
+      const permission = await Permission.findOne({ group: req.params.id, user: req.member.id });
+      if (permission.role !== 'admin') {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
       console.log('body', req.body);
       await Group.findByIdAndUpdate(req.params.id, req.body);
       res.send("Group updated successfully");
     } catch (err) {
       console.log(err);
+      res.status(500).json({ error: 'Server Error' });
     }
   };
