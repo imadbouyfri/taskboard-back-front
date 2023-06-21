@@ -9,12 +9,13 @@ import { useSelector } from "react-redux";
 const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLists, setList }) => {
   const addCardStyle = {
     add: {
-      borderRadius: 0.7,
+      borderRadius: 2.5,
       padding: 0.5,
-      marginTop: 0.1,
+      marginTop: 1,
+      marginBottom: 1.5,
       marginLeft: 1,
       marginRight: 1,
-      backgroundColor: "#e1e2e9",
+      backgroundColor: "#fff",
     },
   };
   const inputCard = {
@@ -90,8 +91,7 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
           <Button
             children={
               <>
-                <AddIcon sx={{ fontSize: "1rem" }}/>
-                <Typography sx={{ fontSize: "0.9rem" }}>Add card</Typography>
+                <AddIcon sx={{ fontSize: "1.6rem" }}/>
               </>
             }
             color="inherit"

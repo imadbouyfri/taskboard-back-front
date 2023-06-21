@@ -13,10 +13,10 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
       borderRadius: 2,
       width: 285,
       padding: 0.2,
-      marginTop: 0,
+      marginTop: 3,
       marginLeft: 1,
       marginRight: 1,
-      backgroundColor: "#fff",
+      backgroundColor: "#ececec",
       flexShrink: 0,
     },
   };

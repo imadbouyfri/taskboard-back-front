@@ -4,6 +4,7 @@ import Card from "../Card/Card";
 import AddCard from "../Card/AddCard";
 import { useEffect, useState } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import CircleIcon from '@mui/icons-material/Circle';
 
 const List = ({
   list,
@@ -18,10 +19,12 @@ const List = ({
 }) => {
   
   const paperStyle = {
-    borderRadius: 0.7,
-    width: "285px",
-    backgroundColor: "#e1e2e9",
-    marginLeft: 1.2,
+    borderRadius: 2,
+    width: "288px",
+    backgroundColor: "#ececec",
+    marginTop: 3,
+    marginBottom: 3,
+    marginLeft: 2,
     flexShrink: 0,
   };
   
@@ -37,15 +40,32 @@ const List = ({
     <Draggable draggableId={currentList._id} index={index}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps}>
-          <Paper sx={paperStyle} {...provided.dragHandleProps}>
-            <Title listTitle={listTitle} setListTitle={setListTitle} listId={currentList._id} boardLists={boardLists}
-                   setBoardLists={setBoardLists} boardId={list.board_id}/>
+          <Paper sx={paperStyle} {...provided.dragHandleProps}x>
+            
+            <Title
+              listTitle={listTitle}
+              setListTitle={setListTitle}
+              listId={currentList._id}
+              boardLists={boardLists}
+              setBoardLists={setBoardLists}
+              boardId={list.board_id}
+            />
+            {provided.placeholder}
+                  <AddCard
+                    toggleAddCard={toggleAddCard}
+                    setToggleAddCard={setToggleAddCard}
+                    list={currentList}
+                    setList={setCurrentList}
+                    boardLists={boardLists}
+                    setBoardLists={setBoardLists}
+                  />
             <Droppable
               droppableId={currentList._id}
               index={index}
               type="card"
             >
               {(provided) => (
+                
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {currentList.cards.map((card, index) => (
                       ((card.name.toLowerCase().includes(searched.search.toLowerCase()) || (card.label && card.label.title.toLowerCase().includes(searched.search.toLowerCase()))) &&
@@ -78,15 +98,6 @@ const List = ({
                       />
                     )
                   )}
-                  {provided.placeholder}
-                  <AddCard
-                    toggleAddCard={toggleAddCard}
-                    setToggleAddCard={setToggleAddCard}
-                    list={currentList}
-                    setList={setCurrentList}
-                    boardLists={boardLists}
-                    setBoardLists={setBoardLists}
-                  />
                 </div>
               )}
             </Droppable>

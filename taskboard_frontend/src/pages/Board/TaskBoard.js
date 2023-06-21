@@ -90,7 +90,8 @@ const Board = () => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingTop: 7
+      paddingTop: '20px',
+      paddingBottom: '20px',
     },
     leftSide: {
       display: 'flex',
@@ -315,7 +316,7 @@ const Board = () => {
   }
   
   return (
-    <div style={{height: '93vh', overflowY: 'auto', overflowX: 'auto', marginTop: '70px'}}>
+    <div style={{height: '93vh', overflowY: 'auto', overflowX: 'auto', marginTop: '60px'}}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <div style={BoardStyle.topBar}>
           <div style={BoardStyle.leftSide}>

@@ -17,7 +17,7 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
       marginRight: 0.9,
       marginBottom: 1,
       borderRadius: 3,
-      backgroundColor: '#FFFEFE',
+      backgroundColor: '#f5f5f5',
       '&:hover': {
         backgroundColor: '#f7f7f7',
       },
