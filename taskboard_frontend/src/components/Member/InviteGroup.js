@@ -44,7 +44,7 @@ const styles = {
   }
 };
 
-export default function InviteMember({
+export default function InviteGroup({
   openPopup,
   setOpenPopup,
   allMembers,

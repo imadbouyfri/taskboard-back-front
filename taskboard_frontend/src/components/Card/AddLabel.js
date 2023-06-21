@@ -71,7 +71,7 @@ const AddLabel = ({ card, setCardLabel, boardLists, setBoardLists, list }) => {
             {labels.map((label, index) => (
               <div key={index} style={{ marginBottom: 5 }}>
                 <input type="radio" name="label" id={index}
-                       onChange={() => setSelectedLabel({ _id: label._id, color: label.color, title: label.title })}/>
+                      onChange={() => setSelectedLabel({ _id: label._id, color: label.color, title: label.title })}/>
                 <label htmlFor={index}>
                   <div style={{
                     backgroundColor: label.color,
@@ -104,9 +104,9 @@ const AddLabel = ({ card, setCardLabel, boardLists, setBoardLists, list }) => {
             <div className="new-label">
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <input name='color' type="color" value={newLabel.color}
-                       onChange={(event) => setNewLabel({ ...newLabel, color: event.target.value })}/>
+                      onChange={(event) => setNewLabel({ ...newLabel, color: event.target.value })}/>
                 <input type="text" value={newLabel.title}
-                       onChange={(event) => setNewLabel({ ...newLabel, title: event.target.value })}/>
+                      onChange={(event) => setNewLabel({ ...newLabel, title: event.target.value })}/>
                 <div style={{
                   backgroundColor: '#4D56BF',
                   color: '#FFFFFF',

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import Popup from "./Popup";
 import InviteMember from '../../components/Member/InviteMember';
+import InviteGroup from '../../components/Member/InviteGroup';
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import RightSidebar from "../../components/Sidebar/RightSidebar";
 import UserAvatar from "../../components/avatar/UserAvatar";
@@ -78,7 +79,7 @@ const Board = () => {
   
   const BoardStyle = {
     paddingTop: 15,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f7f7f7",
     minHeight: "86vh",
     display: "flex",
     alignItems: "flex-start",
@@ -100,8 +101,8 @@ const Board = () => {
     },
     title: {
       fontWeight: 'bold',
-      fontSize: "1.3rem",
-      color: "#495151",
+      fontSize: "1.5rem",
+      color: "black",
     },
     members: {
       marginLeft: 20,
@@ -397,6 +398,27 @@ const Board = () => {
         title={"Share board"}
       >
         <InviteMember
+          allMembers={allMembers}
+          setAllMembers={setAllMembers}
+          invitedMembers={invitedMembers}
+          setInvitedMembers={setInvitedMembers}
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+          recordUpdate={recordUpdate}
+          user={user}
+          boardId={id}
+          boardName={boardTitle}
+        />
+      </Popup>
+
+      <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        setRecordUpdate={setRecordUpdate}
+        recordUpdate={recordUpdate}
+        title={"Share board with teams"}
+      >
+        <InviteGroup
           allMembers={allMembers}
           setAllMembers={setAllMembers}
           invitedMembers={invitedMembers}

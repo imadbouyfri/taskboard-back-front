@@ -10,13 +10,13 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
   const { user } = useSelector((state) => state.auth);
   const addCardStyle = {
     add: {
-      borderRadius: 0.7,
+      borderRadius: 2,
       width: 285,
       padding: 0.2,
       marginTop: 0,
       marginLeft: 1,
       marginRight: 1,
-      backgroundColor: "#C7C8C9",
+      backgroundColor: "#fff",
       flexShrink: 0,
     },
   };
@@ -26,15 +26,16 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
       flexDirection: "column",
     },
     paper: {
-      borderRadius: 0.7,
-      width: 285,
+      borderRadius: 2,
+      width: 290,
       marginTop: 0,
-      marginLeft: 1,
+      marginLeft: 1.5,
       marginRight: 1,
-      padding: 0.5
+      padding: 1
     },
     addButton: {
-      margin: 1
+      borderRadius: 2,
+      margin: 1.5
     },
   };
   
@@ -71,8 +72,8 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
           <Button
             children={
               <>
-                <AddIcon sx={{ fontSize: "1rem" }}/>
-                <Typography sx={{ fontSize: "0.9rem" }}>Add New List</Typography>
+                <AddIcon sx={{ fontSize: "1.4rem", marginRight: '0.8rem', fontWeight: 'bold' }}/>
+                <Typography sx={{ fontSize: "1rem", fontWeight: '0.4' }}> Add New List</Typography>
               </>
             }
             color="inherit"
@@ -106,18 +107,7 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
               color="success"
               onClick={handleOnClick}
             />
-            <CloseIcon
-              fontSize="large"
-              sx={{
-                color: "#000000",
-                marginLeft: 2,
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#d8d8d8",
-                },
-              }}
-              onClick={() => setToggleNewList(!toggleNewList)}
-            />
+            <img src="/images/icons8-cancel-48.png" alt="My Image" style={{maxWidth: '32px', maxHeight: '32px', cursor: "pointer", marginLeft: "10px"}} onClick={() => setToggleNewList(!toggleNewList)}/>
           </div>
         </div>
       </Collapse>
