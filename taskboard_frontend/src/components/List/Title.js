@@ -111,7 +111,7 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
         </div>
       ) : (
         <div style={TitleStyle.titleContainer}>
-          <img src="/images/icons8-rounded-square-48 (1).png" alt="My Image" style={{maxWidth: '24px', maxHeight: '24px'}}/>
+          <img src="/images/icons8-rounded-square-48 (1).png" alt="My Image" style={{maxWidth: '24px', maxHeight: '24px', marginRight: '8px'}}/>
           <Typography
             onClick={() => listTitle.toLowerCase() !== 'done' && setTitleOpened(!titleOpened)}
             sx={TitleStyle.title}

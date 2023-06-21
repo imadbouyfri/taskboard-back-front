@@ -11,13 +11,13 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
   
   const cardStyle = {
     card: {
-      padding: 0.6,
+      padding: 1,
       paddingLeft: 1,
       marginLeft: 0.9,
-      marginRight: 0.9,
-      marginBottom: 1,
+      marginRight: 2,
+      marginBottom: 1.5,
       borderRadius: 3,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#fff',
       '&:hover': {
         backgroundColor: '#f7f7f7',
       },

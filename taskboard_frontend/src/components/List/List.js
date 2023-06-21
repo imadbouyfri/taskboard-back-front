@@ -19,11 +19,12 @@ const List = ({
 }) => {
   
   const paperStyle = {
-    borderRadius: 2,
-    width: "288px",
+    borderRadius: 3,
+    width: "295px",
     backgroundColor: "#ececec",
     marginTop: 3,
     marginBottom: 3,
+    paddingBottom: 2,
     marginLeft: 2,
     flexShrink: 0,
   };

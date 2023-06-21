@@ -15,17 +15,20 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
       marginBottom: 1.5,
       marginLeft: 1,
       marginRight: 1,
-      backgroundColor: "#fff",
+      /* From https://css.glass */
+      background: "rgba(255, 255, 255, 0.7)",
+      backdropFilter: "blur(5px)",
+      WebkitBackdropFilter: "blur(5px)",
+      border: "1px solid rgba(255, 255, 255, 0.3)",
     },
   };
+  
   const inputCard = {
     cont: {
-      marginTop: 0.5,
       marginLeft: 1,
       marginRight: 1,
       paddingBottom: 4,
       paddingLeft: 1,
-      paddingTop: 0.5,
     },
     addButton: {
       margin: 1,
@@ -87,7 +90,7 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
   return (
     <>
       <Collapse in={!toggleAddCard}>
-        <Paper sx={addCardStyle.add} variant={"elevation = 0"}>
+        <Paper sx={{ ...addCardStyle.add, display: "flex", justifyContent: "center", alignItems: "center" }} variant={"elevation = 0"}>
           <Button
             children={
               <>

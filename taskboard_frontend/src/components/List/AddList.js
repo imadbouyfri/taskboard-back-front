@@ -73,7 +73,12 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
             children={
               <>
                 <AddIcon sx={{ fontSize: "1.4rem", marginRight: '0.8rem', fontWeight: 'bold' }}/>
-                <Typography sx={{ fontSize: "1rem", fontWeight: '0.4' }}> Add New List</Typography>
+                <Typography sx={{ flexGrow: 1,
+                  fontWeight: "bold",
+                  fontSize: '1rem',
+                  marginBottom: 0.5,
+                  marginTop: 0.5 }}> Add New List
+                </Typography>
               </>
             }
             color="inherit"
