@@ -3,8 +3,9 @@ import { Typography, InputBase, Popper, Paper, ClickAwayListener, MenuList, Menu
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Chip from '@mui/material/Chip';
 
-const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boardId }) => {
+const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boardId, cardCount }) => {
   const TitleStyle = {
     titleContainer: {
       marginLeft: 8,
@@ -12,7 +13,6 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
       display: "flex",
       paddingTop: 3.5,
       paddingBottom: 4.5,
-      justifyContent: 'center',
       alignItems: 'center'
     },
     title: {
@@ -111,13 +111,29 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
         </div>
       ) : (
         <div style={TitleStyle.titleContainer}>
-          <img src="/images/icons8-rounded-square-48 (1).png" alt="My Image" style={{maxWidth: '24px', maxHeight: '24px', marginRight: '8px'}}/>
+          {listTitle.toLowerCase() === 'todo' && (
+            <img src="/images/icons8-rounded-square-48 (1).png" alt="My Image" style={{ maxWidth: '24px', maxHeight: '24px', marginRight: '8px' }}/>
+          )}
+          {listTitle.toLowerCase() === 'doing' && (
+            <img src="/images/icons8-filled-circle-48 (2).png" alt="My Image" style={{ maxWidth: '24px', maxHeight: '24px', marginRight: '8px' }}/>
+          )}
+          {listTitle.toLowerCase() === 'done' && (
+            <img src="/images/icons8-filled-circle-48 (3).png" alt="My Image" style={{ maxWidth: '24px', maxHeight: '24px', marginRight: '8px' }}/>
+          )}
           <Typography
             onClick={() => listTitle.toLowerCase() !== 'done' && setTitleOpened(!titleOpened)}
             sx={TitleStyle.title}
           >
             {listTitle}
+
+            {listTitle.toLowerCase() === 'todo' && (
+              <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#F3D6A3' }} />)}
+            {listTitle.toLowerCase() === 'doing' && (
+              <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#F2D7FF' }} />)}
+            {listTitle.toLowerCase() === 'done' && (
+              <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#B1F3CF' }} />)}
           </Typography>
+          
           <MoreHorizIcon
             sx={TitleStyle.more}
             onClick={handleToggle}

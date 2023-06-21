@@ -36,6 +36,8 @@ const List = ({
   useEffect(() => {
     setCurrentList(list);
   }, [boardLists]);
+
+  console.log(list);
   
   return (
     <Draggable draggableId={currentList._id} index={index}>
@@ -50,6 +52,7 @@ const List = ({
               boardLists={boardLists}
               setBoardLists={setBoardLists}
               boardId={list.board_id}
+              cardCount={currentList.cards.length}
             />
             {provided.placeholder}
                   <AddCard
@@ -66,7 +69,6 @@ const List = ({
               type="card"
             >
               {(provided) => (
-                
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {currentList.cards.map((card, index) => (
                       ((card.name.toLowerCase().includes(searched.search.toLowerCase()) || (card.label && card.label.title.toLowerCase().includes(searched.search.toLowerCase()))) &&

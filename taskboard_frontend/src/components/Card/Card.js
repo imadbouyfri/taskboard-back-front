@@ -11,7 +11,7 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
   
   const cardStyle = {
     card: {
-      padding: 1,
+      padding: 1.5,
       paddingLeft: 1,
       marginLeft: 0.9,
       marginRight: 2,
@@ -24,9 +24,7 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
       display: `${visibility}`
     },
     containerDiv: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
+      marginBottom: '18px'
     },
     edit: {
       fontSize: 18,
@@ -71,6 +69,8 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
     hours -= 24 * days
     return { time: `${days}d ${hours}h ${minutes}m`, status: true, show: days < 3 };
   }
+
+  console.log(currentCard);
   
   // // delete card
   // const handleOnDelete = async (id) => {
@@ -107,7 +107,17 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
                 )}
               </div>
               <div style={cardStyle.containerDiv}>
-                <Typography style={{ flexGrow: 1, fontSize: '0.9rem' }}>{currentCard.name}</Typography>
+                <Typography style={{ flexGrow: 1,
+                  fontWeight: "bold",
+                  fontSize: '1rem',
+                  paddingTop: 1.5}}>{currentCard.name}
+                </Typography>
+                {currentCard.descData && (
+                  <Typography style={{ 
+                    fontSize: '1rem',
+                    }} variant="body1">{currentCard.descData}
+                  </Typography>
+                )}
               </div>
               <div style={{
                 display: 'flex',
@@ -116,8 +126,8 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
                 justifyContent: 'space-between'
               }}>
                 {dateLimit.show &&
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '90%', backgroundColor: currentCard.deliveryDate ? ('#2FDD92') : (dateLimit.status ? ('#EB5353') : ('#F9D923')), padding: '2px 3px', borderRadius: 3 }}>
-                    <AccessTimeIcon sx={{ color: '#FFFFFF', marginRight: 0.2 }}/>
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: currentCard.deliveryDate ? ('#b7e4c7') : (dateLimit.status ? ('#ff5a5f') : ('#fcbf49')), padding: '2px 3px', borderRadius: 3 }}>
+                    <AccessTimeIcon sx={{ color: '#FFFFFF', marginRight: 0.5 }}/>
                     <p
                       style={{ color: '#FFFFFF' }}>{dateLimit.time}</p>
                   </div>}
