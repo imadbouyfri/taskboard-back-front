@@ -79,7 +79,7 @@ const Board = () => {
   
   const BoardStyle = {
     paddingTop: 15,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: "#fff",
     minHeight: "86vh",
     display: "flex",
     alignItems: "flex-start",
@@ -106,7 +106,7 @@ const Board = () => {
       color: "black",
     },
     members: {
-      marginLeft: 20,
+      marginLeft: 2,
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
@@ -138,10 +138,11 @@ const Board = () => {
     },
     rightSide: {
       width: '28%',
+      marginLeft: '10px',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      gap: '15px'
     }
   };
   
@@ -333,29 +334,19 @@ const Board = () => {
                       onClick={() => setOpenPopup(true)}>
                 <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
               </Button>
-              <div className='membersAvatars' style={BoardStyle.membersAvatars}>
-                {invitedMembers.map((member) => (
-                  <UserAvatar key={member.name} name={member.name} color={member.color}/>
-                ))}
-              </div>
-              {/*Share*/}
-              <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
-                      onClick={() => setOpenPopup(true)}>
-                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
-              </Button>
             </div>
           </div>
-          <div style={BoardStyle.rightSide} className='rightSide'>
+        </div>
+        <div style={BoardStyle.rightSide} className='rightSide'>
             {/*filter*/}
             <PositionedPopper searched={searched} setSearched={setSearched} invitedMembers={invitedMembers}
                               filteredCards={filteredCards} boardLists={boardLists}/>
             {/*// Show menu button*/}
             <div style={BoardStyle.historyButton} className="historyButton"
                  onClick={() => setShowRightSideBar(!showRightSidebar)}>
-              <MenuOpenIcon sx={{ fontSize: 18, marginRight: 2 }}/> SHOW MENU
+              <MenuOpenIcon sx={{ fontSize: 18, marginRight: 1 }}/> Show Activities
             </div>
           </div>
-        </div>
         <div>
           <Droppable droppableId="board" type="list" direction="horizontal">
             {(provided) => (

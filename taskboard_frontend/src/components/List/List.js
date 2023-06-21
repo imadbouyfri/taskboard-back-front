@@ -22,7 +22,7 @@ const List = ({
     borderRadius: 3,
     width: "295px",
     backgroundColor: "#ececec",
-    marginTop: 3,
+    marginTop: 0,
     marginBottom: 3,
     paddingBottom: 2,
     marginLeft: 2,

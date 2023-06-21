@@ -11,9 +11,9 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
   const addCardStyle = {
     add: {
       borderRadius: 2,
-      width: 285,
+      width: 290,
       padding: 0.2,
-      marginTop: 3,
+      marginTop: 0,
       marginLeft: 1,
       marginRight: 1,
       backgroundColor: "#ececec",

@@ -14,7 +14,7 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
       padding: 1.5,
       paddingLeft: 1,
       marginLeft: 0.9,
-      marginRight: 2,
+      marginRight: 0.9,
       marginBottom: 1.5,
       borderRadius: 3,
       backgroundColor: '#fff',
