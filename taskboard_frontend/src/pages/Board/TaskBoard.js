@@ -83,7 +83,7 @@ const Board = () => {
     minHeight: "86vh",
     display: "flex",
     alignItems: "flex-start",
-    topBar: {
+    leftSide: {
       marginRight: '20px',
       marginLeft: '20px',
       display: 'flex',
@@ -91,14 +91,7 @@ const Board = () => {
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingTop: '20px',
-      paddingBottom: '20px',
-    },
-    leftSide: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'start',
-      paddingTop: 7
+      paddingBottom: '15px',
     },
     title: {
       fontWeight: 'bold',
@@ -138,11 +131,13 @@ const Board = () => {
     },
     rightSide: {
       width: '28%',
-      marginLeft: '10px',
+      marginRight: '20px',
+      marginLeft: '15px',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      gap: '15px'
+      paddingBottom: '20px',
+      gap: '20px',
     }
   };
   
@@ -319,11 +314,9 @@ const Board = () => {
   return (
     <div style={{height: '93vh', overflowY: 'auto', overflowX: 'auto', marginTop: '60px'}}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <div style={BoardStyle.topBar}>
           <div style={BoardStyle.leftSide}>
             <p style={BoardStyle.title}>{boardTitle}</p>
             <div style={BoardStyle.members}>
-              <p style={BoardStyle.separator}></p>
               <div className='membersAvatars' style={BoardStyle.membersAvatars}>
                 {invitedMembers.map((member) => (
                   <UserAvatar key={member.name} name={member.name} color={member.color}/>
@@ -332,18 +325,17 @@ const Board = () => {
               {/*Share*/}
               <Button variant='contained' sx={{ paddingLeft: 1, paddingRight: 1, marginLeft: 1, fontSize: '0.8rem' }}
                       onClick={() => setOpenPopup(true)}>
-                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Share
+                <PersonAddAltIcon sx={{ fontSize: 18, marginRight: 0.5 }}/> Add Members
               </Button>
             </div>
           </div>
-        </div>
         <div style={BoardStyle.rightSide} className='rightSide'>
             {/*filter*/}
             <PositionedPopper searched={searched} setSearched={setSearched} invitedMembers={invitedMembers}
                               filteredCards={filteredCards} boardLists={boardLists}/>
             {/*// Show menu button*/}
             <div style={BoardStyle.historyButton} className="historyButton"
-                 onClick={() => setShowRightSideBar(!showRightSidebar)}>
+                onClick={() => setShowRightSideBar(!showRightSidebar)}>
               <MenuOpenIcon sx={{ fontSize: 18, marginRight: 1 }}/> Show Activities
             </div>
           </div>
@@ -408,7 +400,7 @@ const Board = () => {
         setOpenPopup={setOpenPopup}
         setRecordUpdate={setRecordUpdate}
         recordUpdate={recordUpdate}
-        title={"Share board with teams"}
+        title={"Share this board with other members"}
       >
         <InviteGroup
           allMembers={allMembers}
