@@ -120,6 +120,9 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
           {listTitle.toLowerCase() === 'done' && (
             <img src="/images/icons8-filled-circle-48 (3).png" alt="My Image" style={{ maxWidth: '24px', maxHeight: '24px', marginRight: '8px' }}/>
           )}
+          {listTitle.toLowerCase() !== 'todo' && listTitle.toLowerCase() !== 'done' && listTitle.toLowerCase() !== 'doing' && (
+            <img src="/images/icons8-filled-circle-48 (6).png" alt="My Image" style={{ maxWidth: '24px', maxHeight: '24px', marginRight: '8px' }}/>
+          )}
           <Typography
             onClick={() => listTitle.toLowerCase() !== 'done' && setTitleOpened(!titleOpened)}
             sx={TitleStyle.title}
@@ -128,10 +131,13 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
 
             {listTitle.toLowerCase() === 'todo' && (
               <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#F3D6A3' }} />)}
-            {listTitle.toLowerCase() === 'doing' && (
-              <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#F2D7FF' }} />)}
             {listTitle.toLowerCase() === 'done' && (
               <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#B1F3CF' }} />)}
+            {listTitle.toLowerCase() === 'doing' && (
+              <Chip label={cardCount} style={{marginLeft: '18px', padding: '0 12px', backgroundColor: '#F2D7FF' }} />)}
+            {listTitle.toLowerCase() !== 'todo' && listTitle.toLowerCase() !== 'done' && listTitle.toLowerCase() !== 'doing' && (
+                <Chip label={cardCount} style={{ marginLeft: '18px', padding: '0 12px', backgroundColor: '#FFC7E3' }} />
+            )}
           </Typography>
           
           <MoreHorizIcon
