@@ -24,7 +24,7 @@ const List = ({
     backgroundColor: "#ececec",
     marginTop: 0,
     marginBottom: 3,
-    paddingBottom: 2,
+    paddingBottom: 3,
     marginLeft: 2,
     flexShrink: 0,
   };
@@ -54,7 +54,15 @@ const List = ({
               boardId={list.board_id}
               cardCount={currentList.cards.length}
             />
-            {provided.placeholder}
+            
+            <Droppable
+              droppableId={currentList._id}
+              index={index}
+              type="card"
+            >
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {provided.placeholder}
                   <AddCard
                     toggleAddCard={toggleAddCard}
                     setToggleAddCard={setToggleAddCard}
@@ -63,13 +71,6 @@ const List = ({
                     boardLists={boardLists}
                     setBoardLists={setBoardLists}
                   />
-            <Droppable
-              droppableId={currentList._id}
-              index={index}
-              type="card"
-            >
-              {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
                   {currentList.cards.map((card, index) => (
                       ((card.name.toLowerCase().includes(searched.search.toLowerCase()) || (card.label && card.label.title.toLowerCase().includes(searched.search.toLowerCase()))) &&
                         (searched.members.length <= 0 ? true : (searched.members.includes(card.cardPermissions.map((per) => (per.user.name))[0]))) &&
@@ -101,6 +102,7 @@ const List = ({
                       />
                     )
                   )}
+  
                 </div>
               )}
             </Droppable>
