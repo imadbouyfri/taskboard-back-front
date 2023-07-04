@@ -32,7 +32,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
   
   const getListBoards = async () => {
     try {
-      const b = await axios.get("http://localhost:3001/board", config);
+      const b = await axios.get("http://197.153.57.185:3001/board", config);
       setListBoards(b.data);
     } catch (err) {
       console.log(err);

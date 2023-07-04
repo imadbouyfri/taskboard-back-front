@@ -53,7 +53,7 @@ const AddCardDescription = ({ toggleDescription, setToggleDescription, card, set
     if (!description) return;
     try {
       setCard({...card, descData: description})
-      await axios.patch(`http://localhost:3001/card/${card._id}`, {...card, descData: description});
+      await axios.patch(`http://197.153.57.185:3001/card/${card._id}`, {...card, descData: description});
       setToggleDescription(!toggleDescription);
     } catch (err) {
       console.log(err);

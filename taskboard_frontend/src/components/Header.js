@@ -31,7 +31,7 @@ const Header = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/notification/${user._id}`);
+        const response = await axios.get(`http://197.153.57.185:3001/notification/${user._id}`);
         // console.log(response.data);
         setNotifications(response.data);
       } catch (error) {
@@ -141,7 +141,7 @@ const Header = () => {
 
     try {
       // Send API request to update notifications in the database
-      await axios.put(`http://localhost:3001/notification/${user._id}`);
+      await axios.put(`http://197.153.57.185:3001/notification/${user._id}`);
     } catch (error) {
       console.log(error);
     }

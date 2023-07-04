@@ -51,7 +51,7 @@ const Boards = () => {
     }
     
     try {
-      const response = await axios.get("http://localhost:3001/board/", config);
+      const response = await axios.get("http://197.153.57.185:3001/board/", config);
       const { status, message, data } = response;
       if (status !== 200) {
         alert(message, status);
@@ -73,7 +73,7 @@ const Boards = () => {
     }
     
     try {
-      const response = await axios.get("http://localhost:3001/group/", config);
+      const response = await axios.get("http://197.153.57.185:3001/group/", config);
       const { status, message, data } = response;
       if (status !== 200) {
         alert(message, status);
@@ -113,7 +113,7 @@ const Boards = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.patch(`http://localhost:3001/board/${id}`, { active: false }, config);
+          const response = await axios.patch(`http://197.153.57.185:3001/board/${id}`, { active: false }, config);
           if (response.status === 200) {
             Swal.fire(
               'Deleted!',
@@ -153,7 +153,7 @@ const deleteGroups = async (id) => {
     if (result.isConfirmed) {
       try {
         const response = await axios.delete(
-          `http://localhost:3001/group/${id}`,
+          `http://197.153.57.185:3001/group/${id}`,
           config
         );
         if (response.status === 200) {

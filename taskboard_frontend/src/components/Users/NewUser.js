@@ -25,7 +25,7 @@ const NewUser = ({ setUsers, users, userToUpdate, setOpenPopup }) => {
           password
         }
         try {
-          const newUser = await axios.post("http://localhost:3001/member/", userData);
+          const newUser = await axios.post("http://197.153.57.185:3001/member/", userData);
           setUsers([...users, newUser.data]);
           setOpenPopup(false);
         } catch (err) {
@@ -37,7 +37,7 @@ const NewUser = ({ setUsers, users, userToUpdate, setOpenPopup }) => {
     // update user
     if (userToUpdate) {
       try {
-        await axios.patch(`http://localhost:3001/member/${userToUpdate._id}`, {
+        await axios.patch(`http://197.153.57.185:3001/member/${userToUpdate._id}`, {
           name,
           email,
           currentPassword: password,

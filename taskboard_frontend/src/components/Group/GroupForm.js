@@ -55,7 +55,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
       // Set the creator ID in the data object
       data.creator = user._id;
   
-      await axios.post("http://localhost:3001/group", data, config);
+      await axios.post("http://197.153.57.185:3001/group", data, config);
       Swal.fire("Success", "Group added successfully!", "success");
       console.log(data);
     } catch (err) {
@@ -66,7 +66,7 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
 
   const updateGroup = (data) => {
     axios
-      .patch(`http://localhost:3001/group/${state._id}`, { name: data.name, description: data.description }, config)
+      .patch(`http://197.153.57.185:3001/group/${state._id}`, { name: data.name, description: data.description }, config)
       .then((res) => {
         Swal.fire("Success", "Group updated successfully!", "success");
         console.log(res.data);

@@ -78,7 +78,7 @@ export default function InviteGroup({
       role: e.target.value
     } : member)));
     try {
-      await axios.patch("http://localhost:3001/permission", {
+      await axios.patch("http://197.153.57.185:3001/permission", {
         user: memberChanged._id,
         board: boardId,
         group: groupId,
@@ -95,7 +95,7 @@ export default function InviteGroup({
           admin: admin._id,
         };
         console.log(data);
-        await axios.post("http://localhost:3001/notification", data);
+        await axios.post("http://197.153.57.185:3001/notification", data);
     }
   
   
@@ -149,8 +149,8 @@ export default function InviteGroup({
             Authorization: `Bearer ${token}`
           }
         }
-        await axios.post("http://localhost:3001/permission/", data, config);
-        await axios.post("http://localhost:3001/notification", data1, config);
+        await axios.post("http://197.153.57.185:3001/permission/", data, config);
+        await axios.post("http://197.153.57.185:3001/notification", data1, config);
       } catch (err) {
         console.log(err)
       }

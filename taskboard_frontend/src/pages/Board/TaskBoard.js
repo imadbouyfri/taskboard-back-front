@@ -155,7 +155,7 @@ const Board = () => {
       }
     }
     try {
-      const response = await axios.get(`http://localhost:3001/board/${id}`, config);
+      const response = await axios.get(`http://197.153.57.185:3001/board/${id}`, config);
       setBoardTitle(response.data.name);
       setBoardLists(response.data.lists);
     } catch (err) {
@@ -176,7 +176,7 @@ const Board = () => {
     if (sourceList._id === destinationList._id) {
       try {
         const cards = sourceList.cards.map((card) => card._id);
-        await axios.patch(`http://localhost:3001/list/${sourceList._id}`, {
+        await axios.patch(`http://197.153.57.185:3001/list/${sourceList._id}`, {
           cards: cards,
         });
         getSingleBoard();
@@ -188,21 +188,21 @@ const Board = () => {
         const sourceCards = sourceList.cards.map((card) => card._id);
         const destinationCards = destinationList.cards.map((card) => card._id);
         if (destinationList.name.toLowerCase() === 'done') {
-          await axios.patch(`http://localhost:3001/card/${draggedCard._id}`, {
+          await axios.patch(`http://197.153.57.185:3001/card/${draggedCard._id}`, {
             deliveryDate: new Date(),
             list_id: destinationList._id,
           });
         } else {
-          await axios.patch(`http://localhost:3001/card/${draggedCard._id}`, {
+          await axios.patch(`http://197.153.57.185:3001/card/${draggedCard._id}`, {
             list_id: destinationList._id,
           });
         }
         //update sourceList
-        await axios.patch(`http://localhost:3001/list/${sourceList._id}`, {
+        await axios.patch(`http://197.153.57.185:3001/list/${sourceList._id}`, {
           cards: sourceCards,
         });
         // update destination list
-        await axios.patch(`http://localhost:3001/list/${destinationList._id}`, {
+        await axios.patch(`http://197.153.57.185:3001/list/${destinationList._id}`, {
           cards: destinationCards,
         });
         getSingleBoard();
@@ -225,7 +225,7 @@ const Board = () => {
     newBoard.splice(destination.index, 0, draggedList);
     const newBoardLists = newBoard.map((list) => list._id);
     try {
-      await axios.patch(`http://localhost:3001/board/${id}`, {
+      await axios.patch(`http://197.153.57.185:3001/board/${id}`, {
         lists: newBoardLists,
       }, config);
     } catch (err) {
@@ -244,13 +244,13 @@ const Board = () => {
     }
     try {
       // get invited members
-      const response2 = await axios.get(`http://localhost:3001/member/${id}`);
+      const response2 = await axios.get(`http://197.153.57.185:3001/member/${id}`);
       const allInvitedMember = response2.data.map((member) => (
         { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
       ))
       setInvitedMembers(allInvitedMember);
       // get All members
-      const response1 = await axios.get("http://localhost:3001/member", config);
+      const response1 = await axios.get("http://197.153.57.185:3001/member", config);
       const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
       // checking for duplicated values
       for (let i = 0; i < allInvitedMember.length; i++) {

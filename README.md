@@ -28,7 +28,7 @@ Steps to run the application
 
 	 install node module "npm i",
 
-	 Create .env and add this env variable LOCAL_MONGODB=mongodb://localhost:27017/db ,
+	 Create .env and add this env variable LOCAL_MONGODB=mongodb://197.153.57.185:27017/db ,
 
 	  Add JWT_SECRET_KEY=randomstrings  "using this cmnd =   node -e "console.log(require('crypto').randomBytes(90).toString('base64'));" ,
 

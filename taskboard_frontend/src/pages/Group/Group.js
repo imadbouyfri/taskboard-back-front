@@ -82,7 +82,7 @@ const Group = () => {
         }
         }
         try {
-        const response = await axios.get(`http://localhost:3001/group/${id}`, config);
+        const response = await axios.get(`http://197.153.57.185:3001/group/${id}`, config);
         setGroup(response.data);
         // console.log(response.data);
         } catch (err) {
@@ -101,7 +101,7 @@ const Group = () => {
         }
         try {
             // get invited members
-            const response2 = await axios.get(`http://localhost:3001/member/group/${id}`);
+            const response2 = await axios.get(`http://197.153.57.185:3001/member/group/${id}`);
             //   console.log(response2);
             const allInvitedMember = response2.data.map((member) => (
                 { _id: member.user._id, name: member.user.name, email: member.user.email, role: member.role, color: member.user.color }
@@ -109,7 +109,7 @@ const Group = () => {
             setInvitedMembers(allInvitedMember);
             //   console.log(invitedMembers);
             // get All members
-            const response1 = await axios.get("http://localhost:3001/member", config);
+            const response1 = await axios.get("http://197.153.57.185:3001/member", config);
             const Member = response1.data.map((member) => ({ _id: member._id, name: member.name, email: member.email, color: member.color }));
             // checking for duplicated values
             for (let i = 0; i < allInvitedMember.length; i++) {

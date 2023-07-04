@@ -54,7 +54,7 @@ function CardInfo({
     };
     setBoardLists(boardLists.map((bList) => bList._id === list._id ? newList : bList));
     try {
-      await axios.patch(`http://localhost:3001/card/${card._id}`, { dueDate: newValue });
+      await axios.patch(`http://197.153.57.185:3001/card/${card._id}`, { dueDate: newValue });
       setCard({ ...card, dueDate: newValue });
     } catch (err) {
       console.log(err)
