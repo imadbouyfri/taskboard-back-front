@@ -54,6 +54,6 @@ app.get((req, res) => {
   res.status(200).send("404 Page not found");
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server listening on port ${process.env.PORT || 3000}...`);
+app.listen(process.env.PORT || 3000, process.env.HOST || '127.0.0.1' ,() => {
+  console.log(`Server listening on port ${process.env.HOST || '127.0.0.1'}:${process.env.PORT || 3000}...`);
 });

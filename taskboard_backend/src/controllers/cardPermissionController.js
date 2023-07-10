@@ -1,4 +1,4 @@
-const CardPermission = require("../models/CardPermissionModel");
+const CardPermission = require("../models/cardPermissionModel");
 const Card = require("../models/card");
 const Member = require("../models/member");
 

@@ -1,0 +1,36 @@
+"use strict";
+
+var mongoose = require("mongoose");
+var notificationSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  action: {
+    type: String
+  },
+  board: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Board"
+  },
+  group: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "group"
+  },
+  card: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Card"
+  },
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  read: {
+    type: Boolean,
+    "default": false
+  }
+}, {
+  timestamps: true
+});
+module.exports = mongoose.model("Notification", notificationSchema);

@@ -12,10 +12,10 @@ const UserStats = ({ boardId }) => {
     const lists = [];
     const cards = [];
     const cardPermissionsCards = [];
-    const cardPermissions = await axios.get(`http://197.153.57.185:3001/cardPermission/${params.member}`);
+    const cardPermissions = await axios.get(process.env.API_URL+`/cardPermission/${params.member}`);
     cardPermissions.data.map((cp) => cardPermissionsCards.push(cp.card));
     
-    const listsOfBoard = await axios.post(`http://197.153.57.185:3001/list/board/${boardId}`, { cards: cardPermissionsCards });
+    const listsOfBoard = await axios.post(process.env.API_URL+`/list/board/${boardId}`, { cards: cardPermissionsCards });
     listsOfBoard.data.map((list) => lists.push(list));
     for (let i = 0; i < lists.length; i++) {
       for (let j = 0; j < lists[i].cards.length; j++) {

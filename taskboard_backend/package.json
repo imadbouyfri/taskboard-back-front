@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run server\" \"cd ../taskboard_frontend && npm start\"",
-    "server": "nodemon app.js"
+    "server": "nodemon ./src/app.js",
+    "build": "npm run clean && npm run transpile && npm run bundle && npm run optimize && npm run copy-files",
+    "clean": "rm -rf build",
+    "transpile": "babel src -d build",
+    "bundle": "webpack --config webpack.config.js",
+    "optimize": "uglifyjs build/js/*.js -o build/js/main.min.js && csso build/css/*.css -o build/css/style.min.css && imagemin build/images/* -o build/images",
+    "copy-files": "cp -R src/public build/public"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +32,14 @@
     "react-router": "^6.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@babel/cli": "^7.22.6",
+    "@babel/core": "^7.22.6",
+    "@babel/preset-env": "^7.22.6",
+    "babel-loader": "^9.1.2",
+    "copyfiles": "^2.4.1",
+    "crypto-browserify": "^3.12.0",
+    "nodemon": "^2.0.15",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
   }
 }

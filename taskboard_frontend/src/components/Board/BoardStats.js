@@ -15,7 +15,7 @@ const BoardStats = ({ board }) => {
         Authorization: `Bearer ${token}`
       }
     }
-    const d = await axios.get(`http://197.153.57.185:3001/board/${board._id}`, config);
+    const d = await axios.get(process.env.API_URL+`/board/${board._id}`, config);
     const boardData = d.data;
     const lists = boardData.lists.map((l) => l);
     const cards = [];

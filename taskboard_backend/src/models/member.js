@@ -20,7 +20,8 @@ const memberSchema = new mongoose.Schema(
       required: [true, 'Please enter a password'],
     },
     color: {
-      type: Number,
+        type: Number,
+        default: Math.floor(Math.random()*16777215).toString(16)
     },
     role: {
       type: String,

@@ -65,7 +65,7 @@ const CardTitle = ({ card, setCard }) => {
   //   }
   //   try {
   //     console.log('cardId', card._id);
-  //     await axios.delete(`http://197.153.57.185:3001/list/${listId}`);
+  //     await axios.delete(process.env.API_URL+`/list/${listId}`);
   //     const newBordLists = boardLists.filter(list => list._id !== listId);
   //     setBoardLists(newBordLists);
   //   } catch (err) {
@@ -89,7 +89,7 @@ const CardTitle = ({ card, setCard }) => {
     }
     try {
       setCard({...card, name: cardTitle});
-      await axios.patch(`http://197.153.57.185:3001/card/${card._id}`, {...card, name: cardTitle});
+      await axios.patch(process.env.API_URL+`/card/${card._id}`, {...card, name: cardTitle});
       setTitleOpened(!titleOpened);
     } catch (err) {
       console.log(err);

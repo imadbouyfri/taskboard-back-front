@@ -10,6 +10,13 @@ const boardSchema = new mongoose.Schema(
     descData: {
       type: String
     },
+    startDate :{
+        type:Date,
+        default: Date.now()
+    },
+    endDate :{
+        type:Date
+    },
     active: {
       type: Boolean,
       default: true

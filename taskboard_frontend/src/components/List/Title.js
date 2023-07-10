@@ -59,8 +59,8 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
       }
       try {
         console.log('listId', listId);
-        await axios.patch(`http://197.153.57.185:3001/list/${listId}`, { active: false });
-        await axios.post("http://197.153.57.185:3001/listHistory", {
+        await axios.patch(process.env.API_URL+`/list/${listId}`, { active: false });
+        await axios.post(process.env.API_URL+"/listHistory", {
           user: user._id,
           list: listId,
           board: boardId,
@@ -83,8 +83,8 @@ const Title = ({ listTitle, setListTitle, listId, boardLists, setBoardLists, boa
   const handleOnBlur = async () => {
     try {
       console.log('listTitle', listTitle);
-      const updatedList = await axios.patch(`http://197.153.57.185:3001/list/${listId}`, { name: listTitle });
-      await axios.post("http://197.153.57.185:3001/listHistory", {
+      const updatedList = await axios.patch(process.env.API_URL+`/list/${listId}`, { name: listTitle });
+      await axios.post(process.env.API_URL+"/listHistory", {
         user: user._id,
         list: listId,
         board: boardId,

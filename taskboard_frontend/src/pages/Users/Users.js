@@ -32,7 +32,7 @@ const Users = () => {
     // }
     
     try {
-      const response = await axios.get("http://197.153.57.185:3001/member/");
+      const response = await axios.get(process.env.API_URL+"/member/");
       const { status, message, data } = response;
       if (status !== 200) {
         alert(message, status);

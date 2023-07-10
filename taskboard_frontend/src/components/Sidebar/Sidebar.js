@@ -14,6 +14,7 @@ import './sidebar.css';
 
 function Sidebar({ showSidebar, setShowSideBar }) {
   const [listBoards, setListBoards] = useState([]);
+  const [shouldRefresh, setShouldRefresh] = useState(false);
   const [searched, setSearched] = useState("");
   const [recordUpdate, setRecordUpdate] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
@@ -29,11 +30,13 @@ function Sidebar({ showSidebar, setShowSideBar }) {
   const hideSideBar = () => {
     setShowSideBar(!showSidebar);
   }
-  
+
   const getListBoards = async () => {
     try {
-      const b = await axios.get("http://197.153.57.185:3001/board", config);
-      setListBoards(b.data);
+      await axios.get(process.env.API_URL+"/board", config).then((r)=>{
+        setListBoards(r.data);
+        setShouldRefresh(false);
+      });
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +44,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
   
   useEffect(() => {
     getListBoards();
-  }, [listBoards]);
+  }, [shouldRefresh]);
   
   const SidebarItems = listBoards.map((list, index) => ({
     id: index,
@@ -106,6 +109,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           recordUpdate={recordUpdate}
+          setShouldRefresh={setShouldRefresh}
         />
       </Popup>
     </>

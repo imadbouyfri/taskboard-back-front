@@ -19,7 +19,7 @@ const Profile = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://197.153.57.185:3001/member/${user._id}`, currentUser);
+      await axios.patch(process.env.API_URL+`/member/${user._id}`, currentUser);
       console.log(currentUser);
       dispatch(reset());
       dispatch(logout());

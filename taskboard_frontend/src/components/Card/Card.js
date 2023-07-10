@@ -75,7 +75,7 @@ const Card = ({ card, index, boardLists, setBoardLists, visibility, list, invite
   // // delete card
   // const handleOnDelete = async (id) => {
   //   try {
-  //     await axios.delete(`http://197.153.57.185:3001/card/${id}`);
+  //     await axios.delete(process.env.API_URL+`/card/${id}`);
   //     const newListCards = list.cards.filter(card => card._id !== id);
   //     const newBordLists = boardLists.map(boardList => boardList._id === list._id ? {
   //       ...boardList,

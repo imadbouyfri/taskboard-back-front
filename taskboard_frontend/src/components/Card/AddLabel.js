@@ -23,7 +23,7 @@ const AddLabel = ({ card, setCardLabel, boardLists, setBoardLists, list }) => {
   }, [])
   
   const labelsOfBoard = async () => {
-    const boardLabels = await axios.get(`http://197.153.57.185:3001/label/${list.board_id}`);
+    const boardLabels = await axios.get(process.env.API_URL+`/label/${list.board_id}`);
     console.log('boardLabels', boardLabels.data);
     if (boardLabels.data) {
       setLabels(boardLabels.data);
@@ -32,7 +32,7 @@ const AddLabel = ({ card, setCardLabel, boardLists, setBoardLists, list }) => {
   
   const handleNewLabel = async () => {
     if (newLabel.color === '' && newLabel.title === '') return;
-    const nl = await axios.post('http://197.153.57.185:3001/label', { ...newLabel, board: list.board_id });
+    const nl = await axios.post(process.env.API_URL+'/label', { ...newLabel, board: list.board_id });
     setLabels([...labels, nl.data]);
     console.log('newLabel', nl.data);
     setAddLabel(false);
@@ -42,8 +42,8 @@ const AddLabel = ({ card, setCardLabel, boardLists, setBoardLists, list }) => {
     e.preventDefault();
     if (!selectedLabel) return;
     try {
-      // await axios.patch(`http://197.153.57.185:3001/label/${selectedLabel._id}`, { card: card._id });
-      await axios.patch(`http://197.153.57.185:3001/card/${card._id}`, { label: selectedLabel._id });
+      // await axios.patch(process.env.API_URL+`/label/${selectedLabel._id}`, { card: card._id });
+      await axios.patch(process.env.API_URL+`/card/${card._id}`, { label: selectedLabel._id });
       const newList = {
         ...list,
         cards: list.cards.map((c) => c._id === card._id ? { ...card, label: selectedLabel } : c)
