@@ -12,7 +12,7 @@ import BoardForm from "../Board/BoardForm";
 import { useSelector } from "react-redux";
 import './sidebar.css';
 
-function Sidebar({ showSidebar, setShowSideBar }) {
+function Sidebar({ showSidebar, setShowSideBar,refreshBoards }) {
   const [listBoards, setListBoards] = useState([]);
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [searched, setSearched] = useState("");
@@ -33,7 +33,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
 
   const getListBoards = async () => {
     try {
-      await axios.get(process.env.API_URL+"/board", config).then((r)=>{
+      await axios.get("http://127.0.0.1:3001/board", config).then((r)=>{
         setListBoards(r.data);
         setShouldRefresh(false);
       });
@@ -44,7 +44,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
   
   useEffect(() => {
     getListBoards();
-  }, [shouldRefresh]);
+  }, [refreshBoards]);
   
   const SidebarItems = listBoards.map((list, index) => ({
     id: index,
@@ -109,7 +109,7 @@ function Sidebar({ showSidebar, setShowSideBar }) {
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           recordUpdate={recordUpdate}
-          setShouldRefresh={setShouldRefresh}
+          GetBoards={getListBoards}
         />
       </Popup>
     </>

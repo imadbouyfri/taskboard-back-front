@@ -49,7 +49,7 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
     }
     if (!cardTitle) return;
     const { data } = await axios.post(
-      process.env.API_URL+`/card/create`,
+      `http://127.0.0.1:3001/card/create`,
       {
         name: cardTitle,
         list_id: list._id
@@ -57,8 +57,8 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
       config
     );
     // creat card permission
-    await axios.post(process.env.API_URL+'/cardPermission', { card: data._id, user: user._id, role: 'admin' });
-    const cardResponse = await axios.get(process.env.API_URL+`/card/${data._id}`);
+    await axios.post('http://127.0.0.1:3001/cardPermission', { card: data._id, user: user._id, role: 'admin' });
+    const cardResponse = await axios.get(`http://127.0.0.1:3001/card/${data._id}`);
     const newCard = {
       _id: cardResponse.data._id,
       name: cardResponse.data.name,
@@ -73,7 +73,7 @@ const AddCard = ({ toggleAddCard, setToggleAddCard, list, boardLists, setBoardLi
     setList(newList);
     setCardTitle("");
     // add card to history
-    await axios.post(process.env.API_URL+"/cardHistory", {
+    await axios.post("http://127.0.0.1:3001/cardHistory", {
       user: user._id,
       card: newCard._id,
       board: list.board_id,

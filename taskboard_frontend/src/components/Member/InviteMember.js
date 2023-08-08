@@ -78,7 +78,7 @@ export default function InviteMember({
       role: e.target.value
     } : member)));
     try {
-      await axios.patch(process.env.API_URL+"/permission", {
+      await axios.patch("http://127.0.0.1:3001/permission", {
         user: memberChanged._id,
         board: boardId,
         group: groupId,
@@ -95,7 +95,7 @@ export default function InviteMember({
           admin: admin._id,
         };
         console.log(data);
-        await axios.post(process.env.API_URL+"/notification", data);
+        await axios.post("http://127.0.0.1:3001/notification", data);
     }
   
   
@@ -150,8 +150,8 @@ export default function InviteMember({
             Authorization: `Bearer ${token}`
           }
         }
-        await axios.post(process.env.API_URL+"/permission/", data, config);
-        await axios.post(process.env.API_URL+"/notification", data1, config);
+        await axios.post("http://127.0.0.1:3001/permission/", data, config);
+        await axios.post("http://127.0.0.1:3001/notification", data1, config);
       } catch (err) {
         console.log(err)
       }

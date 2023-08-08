@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 
-function BoardForm({ recordUpdate, openPopup, setOpenPopup,setShouldRefresh }) {
+function BoardForm({ recordUpdate, openPopup, setOpenPopup,setShouldRefresh,GetBoards }) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", descData: "" });
   const { name, descData } = state;
   const { user } = useSelector((state) => state.auth);
@@ -59,7 +59,7 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup,setShouldRefresh }) {
   const getSingleBoard = async () => {
     try {
       const response = await axios.get(
-        process.env.API_URL+`/board/${state._id}`, config
+        `http://127.0.0.1:3001/board/${state._id}`, config
       );
       setState(response.data);
     } catch (err) {
@@ -70,20 +70,25 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup,setShouldRefresh }) {
   //addBoard
   const addBoard = async (data) => {
     try {
-      const newBoard = await axios.post(process.env.API_URL+"/board/create", data, config).then(async (r)=>{
-        await axios.post(process.env.API_URL+`/list/${r.data._id}/create`, {
+      const newBoard = await axios.post("http://127.0.0.1:3001/board/create", data, config).then(async (r)=>{
+        await axios.post(`http://127.0.0.1:3001/list/${r.data._id}/create`, {
           name: 'Todo',
           board_id: r.data._id
         });
-        await axios.post(process.env.API_URL+`/list/${r.data._id}/create`, {
+        await axios.post(`http://127.0.0.1:3001/list/${r.data._id}/create`, {
           name: 'Doing',
           board_id: r.data._id
         });
-        await axios.post(process.env.API_URL+`/list/${r.data._id}/create`, {
+        await axios.post(`http://127.0.0.1:3001/list/${r.data._id}/create`, {
           name: 'Done',
           board_id: r.data._id
         });
-      }).then(()=>setShouldRefresh(true))
+      }).then(()=>{
+        Swal.fire("Success", "Board Added successfully!", "success");
+        GetBoards();
+      }
+
+    )
 
     } catch (err) {
       console.log(err);
@@ -94,10 +99,11 @@ function BoardForm({ recordUpdate, openPopup, setOpenPopup,setShouldRefresh }) {
   const updateBoard = (data) => {
     console.log('updateData', data);
   axios
-    .patch(process.env.API_URL+`/board/${state._id}`, { name: data.name, descData: data.descData }, config)
+    .patch(`http://127.0.0.1:3001/board/${state._id}`, { name: data.name, descData: data.descData }, config)
     .then((res) => {
       Swal.fire("Success", "Group updated successfully!", "success");
       console.log(res.data);
+      GetBoards()
     })
     .catch((err) => {
       Swal.fire("Error", "You don't have admin access!", "error");

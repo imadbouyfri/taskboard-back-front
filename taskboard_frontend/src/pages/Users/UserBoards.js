@@ -26,7 +26,7 @@ const UserBoards = () => {
   }
   
   const getUserBoards = async () => {
-    const b = await axios.get(process.env.API_URL+`/permission/${params.member}`);
+    const b = await axios.get(`http://127.0.0.1:3001/permission/${params.member}`);
     setBoards([...b.data.map((per) => per.board)]);
   }
   

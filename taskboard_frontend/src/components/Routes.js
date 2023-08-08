@@ -12,14 +12,14 @@ import Group from "../pages/Group/Group";
 import Users from "../pages/Users/Users";
 import UserBoards from "../pages/Users/UserBoards";
 
-const MainRoutes = () => {
+const MainRoutes = ({ getListBoards }) => {
   return (
     <Routes>
       <Route path='login' element={<Login/>}/>
       <Route path='register' element={<Register/>}/>
       <Route path="/" element={<App/>}>
         <Route path="/" element={<Navigate to="board" replace/>}/>
-        <Route path="board" element={<Boards/>}/>
+        <Route path="board" element={<Boards  refreshBoards={getListBoards}/>}/>
         <Route path="users" element={<Users/>}/>
         <Route path="user-boards/:member" element={<UserBoards/>}/>
         <Route path="profile/:id" element={<Profile/>}/>

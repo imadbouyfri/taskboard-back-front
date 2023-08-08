@@ -20,10 +20,10 @@ export default function CardMemberInvite({ notCardMembers, cardMembers, setCardM
     setAnchorEl(null);
     setCardMembers([...cardMembers, mem]);
     notCardMembers.splice(notCardMembers.indexOf(mem), 1);
-    await axios.post(process.env.API_URL+'/cardPermission', {user: mem._id, card: card._id, role: 'invited'});
+    await axios.post('http://127.0.0.1:3001/cardPermission', {user: mem._id, card: card._id, role: 'invited'});
     const boardId = list.board_id;
     console.log(boardId);
-    const boardResponse = await axios.get(process.env.API_URL+`/board/${boardId}`);
+    const boardResponse = await axios.get(`http://127.0.0.1:3001/board/${boardId}`);
     const board = boardResponse.data;
     const data1 = {
       user: mem._id,
@@ -33,8 +33,8 @@ export default function CardMemberInvite({ notCardMembers, cardMembers, setCardM
       board: {_id: boardId, name: board.name}
     }
     console.log(data1);
-    await axios.post(process.env.API_URL+"/notification", data1);
-    const newCard = await axios.get(process.env.API_URL+`/card/${card._id}`);
+    await axios.post("http://127.0.0.1:3001/notification", data1);
+    const newCard = await axios.get(`http://127.0.0.1:3001/card/${card._id}`);
     const newList = { ...list, cards: list.cards.map((lCard) => lCard._id !== card._id ? lCard : { _id: newCard.data._id, name: newCard.data.name, cardPermissions: newCard.data.cardPermissions, createdAt: newCard.data.createdAt, dueDate: newCard.data.dueDate ? newCard.data.dueDate : '' }) }
     setBoardLists(boardLists.map((bList) => bList._id === list._id ? newList : bList));
   };

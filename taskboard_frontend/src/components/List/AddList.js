@@ -48,12 +48,12 @@ const AddCard = ({ toggleNewList, setToggleNewList, boardLists, setBoardLists, b
         cards: [],
         board_id: boardId
       };
-      const { data } = await axios.post(process.env.API_URL+`/list/${boardId}/create`, newListItem);
+      const { data } = await axios.post(`http://127.0.0.1:3001/list/${boardId}/create`, newListItem);
       const newList = { _id: data._id, name: data.name, cards: data.cards, board_id: data.board_id }
       setBoardLists([...boardLists, { ...newList }]);
       setTitle("");
       // add list to history
-      await axios.post(process.env.API_URL+"/listHistory", {
+      await axios.post("http://127.0.0.1:3001/listHistory", {
         user: user._id,
         list: newList._id,
         board: boardId,

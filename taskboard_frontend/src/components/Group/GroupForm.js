@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 
-function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
+function GroupForm({ recordUpdate, openPopup, setOpenPopup, getGroups}) {
   const [state, setState] = useState(recordUpdate ? recordUpdate : { name: "", description: "" });
   const { name, description } = state;
   const { user } = useSelector((state) => state.auth);
@@ -55,9 +55,10 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
       // Set the creator ID in the data object
       data.creator = user._id;
   
-      await axios.post(process.env.API_URL+"/group", data, config);
+      await axios.post("http://127.0.0.1:3001/group", data, config);
       Swal.fire("Success", "Group added successfully!", "success");
       console.log(data);
+      getGroups()
     } catch (err) {
       console.log(err);
     }
@@ -66,10 +67,11 @@ function GroupForm({ recordUpdate, openPopup, setOpenPopup }) {
 
   const updateGroup = (data) => {
     axios
-      .patch(process.env.API_URL+`/group/${state._id}`, { name: data.name, description: data.description }, config)
+      .patch(`http://127.0.0.1:3001/group/${state._id}`, { name: data.name, description: data.description }, config)
       .then((res) => {
         Swal.fire("Success", "Group updated successfully!", "success");
         console.log(res.data);
+        getGroups()
       })
       .catch((err) => {
         Swal.fire("Error", "You don't have admin access!", "error");

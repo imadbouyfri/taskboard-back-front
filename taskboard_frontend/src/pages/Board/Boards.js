@@ -51,7 +51,7 @@ const Boards = () => {
     }
     
     try {
-      const response = await axios.get(process.env.API_URL+"/board/", config);
+      const response = await axios.get("http://127.0.0.1:3001/board/", config);
       const { status, message, data } = response;
       if (status !== 200) {
         alert(message, status);
@@ -74,7 +74,7 @@ const Boards = () => {
     }
     
     try {
-      const response = await axios.get(process.env.API_URL+"/group/", config);
+      const response = await axios.get("http://127.0.0.1:3001/group/", config);
       const { status, message, data } = response;
       if (status !== 200) {
         alert(message, status);
@@ -114,7 +114,7 @@ const Boards = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.patch(process.env.API_URL+`/board/${id}`, { active: false }, config);
+          const response = await axios.patch(`http://127.0.0.1:3001/board/${id}`, { active: false }, config);
           if (response.status === 200) {
             Swal.fire(
               'Deleted!',
@@ -154,7 +154,7 @@ const deleteGroups = async (id) => {
     if (result.isConfirmed) {
       try {
         const response = await axios.delete(
-          process.env.API_URL+`/group/${id}`,
+          `http://127.0.0.1:3001/group/${id}`,
           config
         );
         if (response.status === 200) {
@@ -479,6 +479,7 @@ const deleteGroups = async (id) => {
           openPopup={openBoardPopup}
           setOpenPopup={setOpenBoardPopup}
           recordUpdate={recordBoardUpdate}
+          GetBoards={GetBoards}
         />
       </Popup>
       <Popup
@@ -506,7 +507,7 @@ const deleteGroups = async (id) => {
           openPopup={openStatsPopup}
           setOpenPopup={setOpenStatsPopup}
           board={selectedBoard}
-          GetGroups= {GetGroups()}
+          // GetGroups= {GetGroups()}
         />
       </Popup>
     </>

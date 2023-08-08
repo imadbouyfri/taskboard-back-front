@@ -11,7 +11,7 @@ function RightSidebar({ showRightSidebar, setShowRightSideBar, boardId, boardLis
   const getCardHistory = async () => {
     const cardHistory = await axios({
       method: 'get',
-      url: process.env.END_API_URL+"/cardHistory/" + boardId
+      url: "http://127.0.0.1:3001/cardHistory/" + boardId
     });
     const cardHistoryData = cardHistory.data.map((his) => (
       {
@@ -25,7 +25,7 @@ function RightSidebar({ showRightSidebar, setShowRightSideBar, boardId, boardLis
   const getListHistory = async () => {
     const listHistory = await axios({
       method: 'get',
-      url: process.env.API_URL+"/listHistory/" + boardId
+      url: "http://127.0.0.1:3001/listHistory/" + boardId
     });
     const listHistoryData = listHistory.data.map((his) => (
       {
